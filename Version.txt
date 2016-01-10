@@ -1,0 +1,40 @@
+
+Novedades de la version
+------------------------
+
+Version 0.0.7
+**************
+
+- Cambio de la vieja estructura por una nueva estructura orientada a objetos, donde cada menu y figura estan representados por una clase y objeto
+
+- Introduccion de pequeñas mejoras en los dialogos y en el manejo de excepciones
+
+Version 0.0.7-1
+*****************
+
+-Corregido error en la pregunta de "¿Desea hacer otra operacion?" que hacia que el programa retornase al nivel anterior al ultimo escogido en lugar de volver al inicio del programa
+
+Version 0.0.7-2
+*****************
+
+-Introducidos cambios en la estructura de las figuras, agrupando las figuras en seis unicas clases.
+-Introducidas descripciones al comienzo de cada archivo, que describen para que sirve cada uno
+-Corregida la formula del area del circulo
+
+Version 0.0.7-3
+****************
+
+-Introducidos cambios en el algoritmo de agrupacion de figuras, sustituyendo los algoritmos basados en un unico metodo usando switch, por una sobrecarga de metodos
+-Se ha añadido una limpieza de pantalla al realizar nueva operacion
+
+Version 0.0.8
+**************
+
+- Realizadas mejoras en el manejo de excepciones, corrigiendo los anteriores errores que sucedian al introducir numeros reales y al introducir numeros enteros no incluidos entre las opciones del menu. Con esto ya quedan eliminados todos las posibles excepciones de los menus.
+
+Version 0.0.9
+**************
+
+- Mejorado el manejo de excepciones, que detecta cuando los valores introducidos corresponden a una figura imposible
+- Corregida la formula del area del triangulo, que ahora se calcula mediante la formula de Heron
+- Mejorada la estetica de los menus

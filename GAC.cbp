@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GAC" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/GAC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/GAC" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="figuras/curvos.cpp" />
+		<Unit filename="figuras/curvos.h" />
+		<Unit filename="figuras/especiales.cpp" />
+		<Unit filename="figuras/especiales.h" />
+		<Unit filename="figuras/piramidales.cpp" />
+		<Unit filename="figuras/piramidales.h" />
+		<Unit filename="figuras/poliedro.cpp" />
+		<Unit filename="figuras/poliedro.h" />
+		<Unit filename="figuras/poligonos.cpp" />
+		<Unit filename="figuras/poligonos.h" />
+		<Unit filename="figuras/prismas.cpp" />
+		<Unit filename="figuras/prismas.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="menus/area.cpp" />
+		<Unit filename="menus/area.h" />
+		<Unit filename="menus/circulares.cpp" />
+		<Unit filename="menus/circulares.h" />
+		<Unit filename="menus/planas.cpp" />
+		<Unit filename="menus/planas.h" />
+		<Unit filename="menus/poli_especial.cpp" />
+		<Unit filename="menus/poli_especial.h" />
+		<Unit filename="menus/principal.cpp" />
+		<Unit filename="menus/principal.h" />
+		<Unit filename="menus/redonda.cpp" />
+		<Unit filename="menus/redonda.h" />
+		<Unit filename="menus/tridimensional.cpp" />
+		<Unit filename="menus/tridimensional.h" />
+		<Unit filename="validar.cpp" />
+		<Unit filename="validar.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

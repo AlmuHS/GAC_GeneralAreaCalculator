@@ -1,0 +1,595 @@
+# depslib dependency file v1.0
+1351810755 source:/home/almu/Escritorio/GAC/figuras/planas/circulo.cpp
+	"circulo.h"
+
+1351811073 /home/almu/Escritorio/GAC/figuras/planas/circulo.h
+	<iostream>
+	<cmath>
+
+1351810728 source:/home/almu/Escritorio/GAC/figuras/planas/elipse.cpp
+	"elipse.h"
+
+1351811094 /home/almu/Escritorio/GAC/figuras/planas/elipse.h
+	<iostream>
+	<cmath>
+
+1351810798 source:/home/almu/Escritorio/GAC/figuras/planas/paralelogramo.cpp
+	"paralelogramo.h"
+
+1351811119 /home/almu/Escritorio/GAC/figuras/planas/paralelogramo.h
+	<iostream>
+	<cmath>
+
+1351810857 source:/home/almu/Escritorio/GAC/figuras/planas/poligonos.cpp
+	"poligonos.h"
+
+1351811187 /home/almu/Escritorio/GAC/figuras/planas/poligonos.h
+	<iostream>
+	<cmath>
+
+1351810882 source:/home/almu/Escritorio/GAC/figuras/planas/rectangulo.cpp
+	"rectangulo.h"
+
+1351811211 /home/almu/Escritorio/GAC/figuras/planas/rectangulo.h
+	<iostream>
+	<cmath>
+
+1351810931 source:/home/almu/Escritorio/GAC/figuras/planas/rombo.cpp
+	"rombo.h"
+
+1351811228 /home/almu/Escritorio/GAC/figuras/planas/rombo.h
+	<iostream>
+	<cmath>
+
+1351810941 source:/home/almu/Escritorio/GAC/figuras/planas/trapecio.cpp
+	"trapecio.h"
+
+1351811236 /home/almu/Escritorio/GAC/figuras/planas/trapecio.h
+	<iostream>
+	<cmath>
+
+1351810951 source:/home/almu/Escritorio/GAC/figuras/planas/triangulo.cpp
+	"triangulo.h"
+
+1351811246 /home/almu/Escritorio/GAC/figuras/planas/triangulo.h
+	<iostream>
+	<cmath>
+
+1351810781 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/cilindro.cpp
+	"cilindro.h"
+
+1351811057 /home/almu/Escritorio/GAC/figuras/tridimensionales/cilindro.h
+	<iostream>
+	<cmath>
+
+1351810748 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/cono.cpp
+	"cono.h"
+
+1351811082 /home/almu/Escritorio/GAC/figuras/tridimensionales/cono.h
+	<iostream>
+	<cmath>
+
+1351810719 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/elipsoide.cpp
+	"elipsoide.h"
+
+1351811101 /home/almu/Escritorio/GAC/figuras/tridimensionales/elipsoide.h
+	<iostream>
+	<cmath>
+
+1351810711 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/esfera.cpp
+	"esfera.h"
+
+1351811109 /home/almu/Escritorio/GAC/figuras/tridimensionales/esfera.h
+	<iostream>
+	<cmath>
+
+1351810755 source:/home/josemi/Escritorio/GAC/figuras/planas/circulo.cpp
+	"circulo.h"
+
+1351811073 /home/josemi/Escritorio/GAC/figuras/planas/circulo.h
+	<iostream>
+	<cmath>
+
+1351810728 source:/home/josemi/Escritorio/GAC/figuras/planas/elipse.cpp
+	"elipse.h"
+
+1351811094 /home/josemi/Escritorio/GAC/figuras/planas/elipse.h
+	<iostream>
+	<cmath>
+
+1351810798 source:/home/josemi/Escritorio/GAC/figuras/planas/paralelogramo.cpp
+	"paralelogramo.h"
+
+1351811119 /home/josemi/Escritorio/GAC/figuras/planas/paralelogramo.h
+	<iostream>
+	<cmath>
+
+1351810857 source:/home/josemi/Escritorio/GAC/figuras/planas/poligonos.cpp
+	"poligonos.h"
+
+1351811187 /home/josemi/Escritorio/GAC/figuras/planas/poligonos.h
+	<iostream>
+	<cmath>
+
+1351810882 source:/home/josemi/Escritorio/GAC/figuras/planas/rectangulo.cpp
+	"rectangulo.h"
+
+1351811211 /home/josemi/Escritorio/GAC/figuras/planas/rectangulo.h
+	<iostream>
+	<cmath>
+
+1351810931 source:/home/josemi/Escritorio/GAC/figuras/planas/rombo.cpp
+	"rombo.h"
+
+1351811228 /home/josemi/Escritorio/GAC/figuras/planas/rombo.h
+	<iostream>
+	<cmath>
+
+1351810941 source:/home/josemi/Escritorio/GAC/figuras/planas/trapecio.cpp
+	"trapecio.h"
+
+1351811236 /home/josemi/Escritorio/GAC/figuras/planas/trapecio.h
+	<iostream>
+	<cmath>
+
+1351810951 source:/home/josemi/Escritorio/GAC/figuras/planas/triangulo.cpp
+	"triangulo.h"
+
+1351811246 /home/josemi/Escritorio/GAC/figuras/planas/triangulo.h
+	<iostream>
+	<cmath>
+
+1351810781 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/cilindro.cpp
+	"cilindro.h"
+
+1351811057 /home/josemi/Escritorio/GAC/figuras/tridimensionales/cilindro.h
+	<iostream>
+	<cmath>
+
+1351810748 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/cono.cpp
+	"cono.h"
+
+1351811082 /home/josemi/Escritorio/GAC/figuras/tridimensionales/cono.h
+	<iostream>
+	<cmath>
+
+1351810719 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/elipsoide.cpp
+	"elipsoide.h"
+
+1351811101 /home/josemi/Escritorio/GAC/figuras/tridimensionales/elipsoide.h
+	<iostream>
+	<cmath>
+
+1351810711 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/esfera.cpp
+	"esfera.h"
+
+1351811109 /home/josemi/Escritorio/GAC/figuras/tridimensionales/esfera.h
+	<iostream>
+	<cmath>
+
+1351810812 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/piramide.cpp
+	"piramide.h"
+
+1351814674 /home/josemi/Escritorio/GAC/figuras/tridimensionales/piramide.h
+	<iostream>
+	"../planas/triangulo.h"
+	"../planas/poligonos.h"
+
+1351810849 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/poliedro.cpp
+	"poliedro.h"
+
+1351814743 /home/josemi/Escritorio/GAC/figuras/tridimensionales/poliedro.h
+	<iostream>
+	"../../validar.h"
+	"../planas/poligonos.h"
+
+1351811305 /home/josemi/Escritorio/GAC/validar.h
+	<iostream>
+	<iomanip>
+
+1351810871 source:/home/josemi/Escritorio/GAC/figuras/tridimensionales/prisma.cpp
+	"prisma.h"
+
+1351814755 /home/josemi/Escritorio/GAC/figuras/tridimensionales/prisma.h
+	<iostream>
+	"../planas/poligonos.h"
+
+1351810812 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/piramide.cpp
+	"piramide.h"
+
+1351814674 /home/almu/Escritorio/GAC/figuras/tridimensionales/piramide.h
+	<iostream>
+	"../planas/triangulo.h"
+	"../planas/poligonos.h"
+
+1351810849 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/poliedro.cpp
+	"poliedro.h"
+
+1351814743 /home/almu/Escritorio/GAC/figuras/tridimensionales/poliedro.h
+	<iostream>
+	"../../validar.h"
+	"../planas/poligonos.h"
+
+1360019621 /home/almu/Escritorio/GAC/validar.h
+	<iostream>
+	<iomanip>
+	<sstream>
+
+1351810871 source:/home/almu/Escritorio/GAC/figuras/tridimensionales/prisma.cpp
+	"prisma.h"
+
+1351814755 /home/almu/Escritorio/GAC/figuras/tridimensionales/prisma.h
+	<iostream>
+	"../planas/poligonos.h"
+
+1359660857 source:/home/almu/Escritorio/GAC/main.cpp
+	<iostream>
+	"validar.h"
+	"menus/principal.h"
+
+1352917985 /home/almu/Escritorio/GAC/menus/principal.h
+	<iostream>
+	<cstdlib>
+	"area.h"
+	"../validar.h"
+
+1353972961 /home/almu/Escritorio/GAC/menus/area.h
+	<cstdlib>
+	<iostream>
+	"../validar.h"
+	"planas.h"
+	"tridimensional.h"
+
+1352917736 /home/almu/Escritorio/GAC/menus/planas.h
+	<iostream>
+	<iomanip>
+	"../validar.h"
+	"../figuras/poligonos.h"
+	"circulares.h"
+	"poli_especial.h"
+
+1352917852 /home/almu/Escritorio/GAC/menus/circulares.h
+	<iostream>
+	<iomanip>
+	"../figuras/curvos.h"
+	"../validar.h"
+
+1352917750 /home/almu/Escritorio/GAC/menus/poli_especial.h
+	<iostream>
+	<iomanip>
+	"../validar.h"
+	"../figuras/especiales.h"
+
+1352918099 /home/almu/Escritorio/GAC/menus/tridimensional.h
+	<iostream>
+	"../validar.h"
+	"redonda.h"
+	"../figuras/poliedro.h"
+	"../figuras/prismas.h"
+	"../figuras/piramidales.h"
+
+1352918038 /home/almu/Escritorio/GAC/menus/redonda.h
+	<iostream>
+	"../validar.h"
+	"../figuras/curvos.h"
+	"../figuras/piramidales.h"
+	"../figuras/prismas.h"
+
+1360019597 source:/home/almu/Escritorio/GAC/menus/area.cpp
+	"area.h"
+
+1360000083 source:/home/almu/Escritorio/GAC/menus/circulares.cpp
+	"circulares.h"
+
+1360000083 source:/home/almu/Escritorio/GAC/menus/planas.cpp
+	"planas.h"
+
+1360000114 source:/home/almu/Escritorio/GAC/menus/poli_especial.cpp
+	"poli_especial.h"
+
+1360000099 source:/home/almu/Escritorio/GAC/menus/principal.cpp
+	"principal.h"
+
+1360000171 source:/home/almu/Escritorio/GAC/menus/redonda.cpp
+	"redonda.h"
+
+1360000180 source:/home/almu/Escritorio/GAC/menus/tridimensional.cpp
+	"tridimensional.h"
+
+1360019607 source:/home/almu/Escritorio/GAC/validar.cpp
+	"validar.h"
+
+1351813652 source:/home/almu/Escritorio/GAC (copia)/main.cpp
+	<iostream>
+	"validar.h"
+	"menus/principal.h"
+
+1351811305 /home/almu/Escritorio/GAC (copia)/validar.h
+	<iostream>
+	<iomanip>
+
+1351877074 /home/almu/Escritorio/GAC (copia)/menus/principal.h
+	<iostream>
+	<cstdlib>
+	"area.h"
+	"../validar.h"
+
+1351814697 /home/almu/Escritorio/GAC (copia)/menus/area.h
+	<iostream>
+	"../validar.h"
+	"planas.h"
+	"tridimensional.h"
+
+1352851291 /home/almu/Escritorio/GAC (copia)/menus/planas.h
+	<iostream>
+	<iomanip>
+	"../validar.h"
+	"../figuras/poligonos.h"
+	"circulares.h"
+	"poli_especial.h"
+
+1352845836 /home/almu/Escritorio/GAC (copia)/menus/circulares.h
+	<iostream>
+	<iomanip>
+	"../figuras/curvos.h"
+	"../validar.h"
+
+1352900877 /home/almu/Escritorio/GAC (copia)/menus/poli_especial.h
+	<iostream>
+	<iomanip>
+	"../validar.h"
+	"../figuras/especiales.h"
+
+1352903575 /home/almu/Escritorio/GAC (copia)/menus/tridimensional.h
+	<iostream>
+	"../validar.h"
+	"redonda.h"
+	"../figuras/poliedro.h"
+	"../figuras/prismas.h"
+	"../figuras/piramidales.h"
+
+1352853934 /home/almu/Escritorio/GAC (copia)/menus/redonda.h
+	<iostream>
+	"../validar.h"
+	"../figuras/curvos.h"
+	"../figuras/piramidales.h"
+	"../figuras/prismas.h"
+
+1351951798 source:/home/almu/Escritorio/GAC (copia)/menus/area.cpp
+	"area.h"
+
+1351798720 source:/home/almu/Escritorio/GAC (copia)/menus/principal.cpp
+	"principal.h"
+
+1351810993 source:/home/almu/Escritorio/GAC (copia)/validar.cpp
+	"validar.h"
+
+1352846568 source:/home/almu/Escritorio/GAC (copia)/menus/circulares.cpp
+	"circulares.h"
+
+1352844935 source:/home/almu/Escritorio/GAC (copia)/menus/planas.cpp
+	"planas.h"
+
+1352900955 source:/home/almu/Escritorio/GAC (copia)/menus/poli_especial.cpp
+	"poli_especial.h"
+
+1352853969 source:/home/almu/Escritorio/GAC (copia)/menus/redonda.cpp
+	"redonda.h"
+
+1352903613 source:/home/almu/Escritorio/GAC (copia)/menus/tridimensional.cpp
+	"tridimensional.h"
+
+1352853620 source:/home/almu/Escritorio/GAC (copia)/figuras/poligonos.cpp
+	"poligonos.h"
+
+1352853644 /home/almu/Escritorio/GAC (copia)/figuras/poligonos.h
+	<iostream>
+	<iomanip>
+	<cmath>
+
+1352847916 source:/home/almu/Escritorio/GAC (copia)/figuras/curvos.cpp
+	"curvos.h"
+
+1352846667 /home/almu/Escritorio/GAC (copia)/figuras/curvos.h
+	<iostream>
+	<cmath>
+
+1352850692 source:/home/almu/Escritorio/GAC (copia)/figuras/piramidales.cpp
+	"piramidales.h"
+
+1352850566 /home/almu/Escritorio/GAC (copia)/figuras/piramidales.h
+	<iostream>
+	<cmath>
+	"poligonos.h"
+
+1352853753 source:/home/almu/Escritorio/GAC (copia)/figuras/prismas.cpp
+	"prismas.h"
+
+1352853675 /home/almu/Escritorio/GAC (copia)/figuras/prismas.h
+	<iostream>
+	"poligonos.h"
+
+1352900137 source:/home/almu/Escritorio/GAC (copia)/figuras/especiales.cpp
+	"especiales.h"
+
+1352898685 /home/almu/Escritorio/GAC (copia)/figuras/especiales.h
+	<iostream>
+	<cmath>
+
+1352903650 /home/almu/Escritorio/GAC (copia)/figuras/poliedro.h
+	<iostream>
+	"../validar.h"
+	"poligonos.h"
+
+1353601553 source:/home/almu/Escritorio/GAC/figuras/especiales.cpp
+	"especiales.h"
+
+1353601422 /home/almu/Escritorio/GAC/figuras/especiales.h
+	<iostream>
+	<cmath>
+
+1353601625 source:/home/almu/Escritorio/GAC/figuras/piramidales.cpp
+	"piramidales.h"
+
+1353601599 /home/almu/Escritorio/GAC/figuras/piramidales.h
+	<iostream>
+	<cmath>
+	"poligonos.h"
+
+1353602130 /home/almu/Escritorio/GAC/figuras/poligonos.h
+	<iostream>
+	<iomanip>
+	<cmath>
+
+1353487312 source:/home/almu/Escritorio/GAC/figuras/poliedro.cpp
+	"poliedro.h"
+
+1353487265 /home/almu/Escritorio/GAC/figuras/poliedro.h
+	<iostream>
+	"../validar.h"
+	"poligonos.h"
+
+1353601940 source:/home/almu/Escritorio/GAC/figuras/poligonos.cpp
+	"poligonos.h"
+
+1353601200 source:/home/almu/Escritorio/GAC/figuras/prismas.cpp
+	"prismas.h"
+
+1353596862 /home/almu/Escritorio/GAC/figuras/prismas.h
+	<iostream>
+	"poligonos.h"
+
+1353601402 /home/almu/Escritorio/GAC/figuras/curvos.h
+	<iostream>
+	<cmath>
+
+1353601534 source:/home/almu/Escritorio/GAC/figuras/curvos.cpp
+	"curvos.h"
+
+1383753858 source:/home/almu/GAC/figuras/curvos.cpp
+	"curvos.h"
+
+1383753678 /home/almu/GAC/figuras/curvos.h
+	<iostream>
+	<cmath>
+
+1353601553 source:/home/almu/GAC/figuras/especiales.cpp
+	"especiales.h"
+
+1353601422 /home/almu/GAC/figuras/especiales.h
+	<iostream>
+	<cmath>
+
+1353601625 source:/home/almu/GAC/figuras/piramidales.cpp
+	"piramidales.h"
+
+1353601599 /home/almu/GAC/figuras/piramidales.h
+	<iostream>
+	<cmath>
+	"poligonos.h"
+
+1383750311 /home/almu/GAC/figuras/poligonos.h
+	<iostream>
+	<iomanip>
+	<cmath>
+
+1353487312 source:/home/almu/GAC/figuras/poliedro.cpp
+	"poliedro.h"
+
+1383753702 /home/almu/GAC/figuras/poliedro.h
+	<iostream>
+	"../validar.h"
+	"poligonos.h"
+
+1360019621 /home/almu/GAC/validar.h
+	<iostream>
+	<iomanip>
+	<sstream>
+
+1383738405 source:/home/almu/GAC/figuras/poligonos.cpp
+	"poligonos.h"
+
+1353601200 source:/home/almu/GAC/figuras/prismas.cpp
+	"prismas.h"
+
+1353596862 /home/almu/GAC/figuras/prismas.h
+	<iostream>
+	"poligonos.h"
+
+1360601484 source:/home/almu/GAC/main.cpp
+	<iostream>
+	"validar.h"
+	"menus/principal.h"
+
+1352917985 /home/almu/GAC/menus/principal.h
+	<iostream>
+	<cstdlib>
+	"area.h"
+	"../validar.h"
+
+1353972961 /home/almu/GAC/menus/area.h
+	<cstdlib>
+	<iostream>
+	"../validar.h"
+	"planas.h"
+	"tridimensional.h"
+
+1352917736 /home/almu/GAC/menus/planas.h
+	<iostream>
+	<iomanip>
+	"../validar.h"
+	"../figuras/poligonos.h"
+	"circulares.h"
+	"poli_especial.h"
+
+1352917852 /home/almu/GAC/menus/circulares.h
+	<iostream>
+	<iomanip>
+	"../figuras/curvos.h"
+	"../validar.h"
+
+1352917750 /home/almu/GAC/menus/poli_especial.h
+	<iostream>
+	<iomanip>
+	"../validar.h"
+	"../figuras/especiales.h"
+
+1352918099 /home/almu/GAC/menus/tridimensional.h
+	<iostream>
+	"../validar.h"
+	"redonda.h"
+	"../figuras/poliedro.h"
+	"../figuras/prismas.h"
+	"../figuras/piramidales.h"
+
+1352918038 /home/almu/GAC/menus/redonda.h
+	<iostream>
+	"../validar.h"
+	"../figuras/curvos.h"
+	"../figuras/piramidales.h"
+	"../figuras/prismas.h"
+
+1383755911 source:/home/almu/GAC/menus/area.cpp
+	"area.h"
+
+1383755926 source:/home/almu/GAC/menus/circulares.cpp
+	"circulares.h"
+
+1383755959 source:/home/almu/GAC/menus/planas.cpp
+	"planas.h"
+
+1360000114 source:/home/almu/GAC/menus/poli_especial.cpp
+	"poli_especial.h"
+
+1383755967 source:/home/almu/GAC/menus/principal.cpp
+	"principal.h"
+
+1360000171 source:/home/almu/GAC/menus/redonda.cpp
+	"redonda.h"
+
+1360000180 source:/home/almu/GAC/menus/tridimensional.cpp
+	"tridimensional.h"
+
+1383755464 source:/home/almu/GAC/validar.cpp
+	"validar.h"
+

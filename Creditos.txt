@@ -1,0 +1,7 @@
+- Idea original: Jose Miguel Ruiz Torres
+
+- Programa principal y metodo de calculo por parametros: Almudena Garcia Jurado-Centurion
+
+- Manejo de excepciones: Almudena Garcia Jurado-Centurion, Cristian Corado Cordero
+
+- Metodo de calculo por coordenadas (Proxima implementacion): Angel Olivera Crego, Cristian Corado Cordero

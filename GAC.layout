@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="figuras/curvos.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="figuras/curvos.h" open="0" top="0" tabpos="3">
+		<Cursor position="1283" topLine="35" />
+	</File>
+	<File name="figuras/especiales.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="3360" topLine="81" />
+	</File>
+	<File name="figuras/especiales.h" open="0" top="0" tabpos="6">
+		<Cursor position="1184" topLine="33" />
+	</File>
+	<File name="figuras/piramidales.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="2014" topLine="45" />
+	</File>
+	<File name="figuras/piramidales.h" open="0" top="0" tabpos="0">
+		<Cursor position="1213" topLine="36" />
+	</File>
+	<File name="figuras/poliedro.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="1874" topLine="42" />
+	</File>
+	<File name="figuras/poliedro.h" open="0" top="0" tabpos="0">
+		<Cursor position="1107" topLine="30" />
+	</File>
+	<File name="figuras/poligonos.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="1106" topLine="31" />
+	</File>
+	<File name="figuras/poligonos.h" open="0" top="0" tabpos="3">
+		<Cursor position="1082" topLine="23" />
+	</File>
+	<File name="figuras/prismas.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="2476" topLine="63" />
+	</File>
+	<File name="figuras/prismas.h" open="0" top="0" tabpos="5">
+		<Cursor position="1112" topLine="32" />
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="menus/area.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="25" topLine="0" />
+	</File>
+	<File name="menus/area.h" open="0" top="0" tabpos="5">
+		<Cursor position="1012" topLine="24" />
+	</File>
+	<File name="menus/circulares.h" open="0" top="0" tabpos="6">
+		<Cursor position="847" topLine="15" />
+	</File>
+	<File name="menus/planas.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="1553" topLine="45" />
+	</File>
+	<File name="menus/planas.h" open="0" top="0" tabpos="5">
+		<Cursor position="971" topLine="18" />
+	</File>
+	<File name="menus/poli_especial.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="1993" topLine="55" />
+	</File>
+	<File name="menus/poli_especial.h" open="0" top="0" tabpos="7">
+		<Cursor position="816" topLine="20" />
+	</File>
+	<File name="menus/principal.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="1218" topLine="40" />
+	</File>
+	<File name="menus/principal.h" open="0" top="0" tabpos="4">
+		<Cursor position="1035" topLine="22" />
+	</File>
+	<File name="menus/redonda.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="1976" topLine="65" />
+	</File>
+	<File name="menus/redonda.h" open="0" top="0" tabpos="9">
+		<Cursor position="945" topLine="16" />
+	</File>
+	<File name="menus/tridimensional.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="1934" topLine="63" />
+	</File>
+	<File name="menus/tridimensional.h" open="0" top="0" tabpos="8">
+		<Cursor position="1011" topLine="25" />
+	</File>
+</CodeBlocks_layout_file>
