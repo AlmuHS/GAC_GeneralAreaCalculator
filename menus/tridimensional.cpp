@@ -35,11 +35,16 @@ tridimensional::tridimensional(){
 }
 
 int tridimensional::menu(){
-    cout<<setw(20)<<setfill('*')<<""<<endl;
-    cout<<"1. Redonda\n"
-        <<"2. Poliedrica\n"
-        <<"3. Prisma\n"
-        <<"4. Piramidal\n"<<endl;
+    cout<< "\n\n\t\t----------------------------------------------" << endl
+        << "\t\t------------  Figuras espaciales  ------------" << endl
+        << "\t\t----------------------------------------------" << endl
+        << "\n\t\t\t 1.Redonda." << endl
+        << "\n\t\t\t 2.Poliedrica." << endl
+        << "\n\t\t\t 3.Prisma." << endl
+        << "\n\t\t\t 4.Piramidal."<<endl
+        //<< "\n\t\t\t 5.Regresar al menu anterior." << endl;
+        //<< "\n\t\t\t 6.Salir del programa." << endl;
+        << "\n\t\t----------------------------------------------" << endl;
     seleccion=validar(4);
     return seleccion;
 }
