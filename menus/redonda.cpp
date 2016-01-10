@@ -6,10 +6,10 @@ y permite calcular sus areas
 
 Autor: Almudena Garcia Jurado-Centurion
 
-Año 2011 2012*/
+Año 2011 2012 2013*/
 /*********************************************/
 
-/* Copyright 2011 2012 Almudena García Jurado-Centurión
+/* Copyright 2011 2012 2013 Almudena García Jurado-Centurión
     This file is part of GAC.
 
     GAC is free software: you can redistribute it and/or modify
@@ -36,11 +36,16 @@ redonda::redonda(){
 }
 
 int redonda::menu(){
-    cout<<setw(20)<<setfill('*')<<""<<endl;
-    cout<<"\n1. Esfera"
-        <<"\n2. Elipsoide"
-        <<"\n3. Cono"
-        <<"\n4. Cilindro"<<endl;
+    cout<< "\n\n\t\t----------------------------------------------" << endl
+        << "\t\t-------------  Figuras redondas  -------------" << endl
+        << "\t\t----------------------------------------------" << endl
+        << "\n\t\t\t 1.Esfera." << endl
+        << "\n\t\t\t 2.Elipsoide." << endl
+        << "\n\t\t\t 3.Cono." << endl
+        << "\n\t\t\t 4.Cilindro."<<endl
+        //<< "\n\t\t\t 5.Regresar al menu anterior." << endl;
+        //<< "\n\t\t\t 6.Salir del programa." << endl;
+        << "\n\t\t----------------------------------------------" << endl;
     seleccion=validar(4);
     return seleccion;
 }

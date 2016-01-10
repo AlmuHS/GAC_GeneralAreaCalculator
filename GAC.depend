@@ -466,21 +466,21 @@
 1353601534 source:/home/almu/Escritorio/GAC/figuras/curvos.cpp
 	"curvos.h"
 
-1383753858 source:/home/almu/GAC/figuras/curvos.cpp
+1385676507 source:/home/almu/GAC/figuras/curvos.cpp
 	"curvos.h"
 
 1383753678 /home/almu/GAC/figuras/curvos.h
 	<iostream>
 	<cmath>
 
-1353601553 source:/home/almu/GAC/figuras/especiales.cpp
+1384529280 source:/home/almu/GAC/figuras/especiales.cpp
 	"especiales.h"
 
 1353601422 /home/almu/GAC/figuras/especiales.h
 	<iostream>
 	<cmath>
 
-1353601625 source:/home/almu/GAC/figuras/piramidales.cpp
+1384529219 source:/home/almu/GAC/figuras/piramidales.cpp
 	"piramidales.h"
 
 1353601599 /home/almu/GAC/figuras/piramidales.h
@@ -493,7 +493,7 @@
 	<iomanip>
 	<cmath>
 
-1353487312 source:/home/almu/GAC/figuras/poliedro.cpp
+1384529262 source:/home/almu/GAC/figuras/poliedro.cpp
 	"poliedro.h"
 
 1383753702 /home/almu/GAC/figuras/poliedro.h
@@ -506,7 +506,7 @@
 	<iomanip>
 	<sstream>
 
-1383738405 source:/home/almu/GAC/figuras/poligonos.cpp
+1384106932 source:/home/almu/GAC/figuras/poligonos.cpp
 	"poligonos.h"
 
 1353601200 source:/home/almu/GAC/figuras/prismas.cpp
@@ -578,13 +578,13 @@
 1383755959 source:/home/almu/GAC/menus/planas.cpp
 	"planas.h"
 
-1360000114 source:/home/almu/GAC/menus/poli_especial.cpp
+1388076570 source:/home/almu/GAC/menus/poli_especial.cpp
 	"poli_especial.h"
 
 1383755967 source:/home/almu/GAC/menus/principal.cpp
 	"principal.h"
 
-1360000171 source:/home/almu/GAC/menus/redonda.cpp
+1388076792 source:/home/almu/GAC/menus/redonda.cpp
 	"redonda.h"
 
 1360000180 source:/home/almu/GAC/menus/tridimensional.cpp

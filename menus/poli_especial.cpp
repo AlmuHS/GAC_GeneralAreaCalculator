@@ -6,10 +6,10 @@ tales como rombo y trapecio; y permite calcular sus areas
 
 Autor: Almudena Garcia Jurado-Centurion
 
-Año 2011 2012*/
+Año 2011 2012 2013*/
 /*********************************************/
 
-/* Copyright 2011 2012 Almudena García Jurado-Centurión
+/* Copyright 2011 2012 2013 Almudena García Jurado-Centurión
     This file is part of GAC.
 
     GAC is free software: you can redistribute it and/or modify
@@ -35,10 +35,15 @@ poli_especial::poli_especial(){
 }
 
 int poli_especial::menu(){
-    cout<<setw(20)<<setfill('*')<<""<<endl;
-    cout<<"1. Rombo"
-        <<"\n2. Paralelogramo"
-        <<"\n3. Trapecio"<<endl;
+    cout<< "\n\n\t\t----------------------------------------------" << endl
+        << "\t\t-----------  Poligonos especiales  -----------" << endl
+        << "\t\t----------------------------------------------" << endl
+        << "\n\t\t\t 1.Rombo " << endl
+        << "\n\t\t\t 2.Paralelogramo." << endl
+        << "\n\t\t\t 3.Trapecio." << endl
+        //<< "\n\t\t\t 4.Regresar al menu anterior." << endl;
+        //<< "\n\t\t\t 5.Salir del programa." << endl;
+        << "\n\t\t----------------------------------------------" << endl;
     seleccion=validar(3);
     return seleccion;
 }
