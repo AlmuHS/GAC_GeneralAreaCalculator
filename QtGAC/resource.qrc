@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/menu/circular.png</file>
+        <file>images/menu/plana.png</file>
+        <file>images/menu/poligonal.png</file>
+        <file>images/menu/tridimensional.png</file>
+        <file>images/planas/circulo.png</file>
+        <file>images/planas/elipse.png</file>
+        <file>images/planas/paralelogramo.png</file>
+        <file>images/planas/rectangulo.png</file>
+        <file>images/planas/regular.png</file>
+        <file>images/planas/rombo.png</file>
+        <file>images/planas/trapecio.png</file>
+        <file>images/planas/triangulo.png</file>
+        <file>images/menu/operaciones.png</file>
+        <file>images/tridimensionales/cilindro.png</file>
+        <file>images/tridimensionales/cono.png</file>
+        <file>images/tridimensionales/elipsoide.png</file>
+        <file>images/tridimensionales/esfera.png</file>
+        <file>images/tridimensionales/poliedro.png</file>
+        <file>images/tridimensionales/prisma.png</file>
+        <file>images/tridimensionales/piramide.png</file>
+        <file>images/logo.png</file>
+        <file>images/menu/redonda.png</file>
+        <file>images/menu/about.png</file>
+        <file>images/menu/exit.png</file>
+        <file>diccionario/index.html</file>
+        <file>diccionario/planas/circulares/circulo.html</file>
+        <file>diccionario/style.css</file>
+        <file>diccionario/planas/poligonales/regular.html</file>
+        <file>diccionario/planas/poligonales/triangulo.html</file>
+        <file>diccionario/images/circulo.gif</file>
+        <file>diccionario/images/regular.gif</file>
+        <file>diccionario/images/triangulo.gif</file>
+    </qresource>
+</RCC>
