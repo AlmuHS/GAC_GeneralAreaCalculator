@@ -33,15 +33,11 @@ void nombre_poligono(int lados, int reg);
 
 int lados_angulos(struct vertice *poligono, int lados);
 
-int menu(void);
+int menu();
 
 double mayorque(double x, double y);
 
 double menorque(double x, double y);
-
-void marco (void);
-
-void cabecera(void);
 
 double redondea(double r,int n_digit);
 
@@ -329,9 +325,16 @@ int lados_angulos(struct vertice *poligono, int lados) {
 	return(regular);
 }
 
-int menu(void) {
+int menu() {
 	system("clear");
-	cabecera();
+
+	int i;
+	int frame_length = 80
+	for(i = 0; i < frame_length; i++)printf("=");
+	printf("\n\t\t\t CALCULADORA DE AREAS\n");
+	for(i = 0; i < frame_length; i++)printf("=");
+	printf("\n");
+
 	char resp;
 	printf( "\n\tSeleccione una opcion del menu.\n"
 	        "\n\t\ta) Calcular el area de cualquier poligono a"
@@ -354,18 +357,6 @@ double mayorque(double x, double y) {
 double menorque(double x, double y) {
 	if(x<y)return x;
 	else return y;
-}
-
-void marco(void) {
-	int i;
-	for(i=0; i<80; i++)printf("=");
-}
-
-void cabecera(void) {
-	marco();
-	printf("\n\t\t\t CALCULADORA DE AREAS\n");
-	marco();
-	printf("\n");
 }
 
 double redondea(double r,int n_digit) {
