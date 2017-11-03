@@ -36,11 +36,11 @@ const long double PI = 3.141592653589793115997963468544185161590576171875;
 
 void cabecera();
 void resultados();
-void mostrar_poligono(struct vertice *poligono, int numero, double x_max, double y_max, double x_min, double y_min);
+void free_dynmem();
 string nombre_poligono(int lados, int reg);
 int lados_angulos(struct vertice *poligono, int lados);
-double mayorque(double x, double y);
-double menorque(double x, double y);
+double area();
+double perimetro();
 double redondea(double r, int n_digit);
 
 int main() {
@@ -206,52 +206,29 @@ void cabecera() {
 }
 
 void resultados() {
-	/* Hallamos el área */
-	double area, x, y;
-	for(int i = 0; i < numero; i++) {
-		x = x + (poligono->x * (poligono->siguiente)->y);
-		y = y + (poligono->y * (poligono->siguiente)->x);
-		poligono = poligono->siguiente;
-	}
-	area = fabsf(x - y) / 2;
-	/* Calculamos el perímetro */
-	double peri = 0;
-	double x_max = poligono->x;
-	double x_min = poligono->x;
-	double y_max = poligono->y;
-	double y_min = poligono->y;
-	for(int i = 0; i < numero; i++) {
-		x_max = mayorque(poligono->x, x_max);
-		x_min = menorque(poligono->x, x_min);
-		y_max = mayorque(poligono->y, y_max);
-		y_min = menorque(poligono->y, y_min);
-		peri = peri + poligono->arista_poste;
-		poligono = poligono->siguiente;
-	}
-
-	/* Interfaz */
 	cabecera();
 	cout << "\n\t\t\t\tResultados:\n\n"
 	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
-	for(int i = 0; i < numero; i++) {
-		if(i % 1 == 0) cout << endl;
-		cout << i + 1 << "\t(" << poligono->x << ", " << poligono->y << ") <) " << poligono->angulo << "º"
+	for(int i = 1; i <= numero; i++) {
+		cout << endl;
+		cout << i << "\t(" << poligono->x << ", " << poligono->y << ") <) " << poligono->angulo << "º"
 		     << " \t(" << poligono->siguiente->x << ", " << poligono->siguiente->y << ") <) " << poligono->siguiente->angulo << "º"
 		     << " \t|" << poligono->arista_poste << "|";
 		poligono = poligono->siguiente;
 	}
-	//nombre_poligono(numero, regular); /* Reconocemos de qué polígono se trata */
 	cout << "\n\n\tEs un polígono de " << numero <<" vértices." << endl;
 	if(numero >= 100) cout << "\tSe desconoce el nombre de la figura." << endl;
-	else cout << "\tLa figura se trata de un " << nombre_poligono(numero, regular) << "." << endl;
-	
-	cout << "\tÁrea: " << area << " u²" << endl
-	     << "\tPerímetro: " << peri << " u" << endl;
-	mostrar_poligono(poligono, numero, x_max, y_max, x_min, y_min);
+	else cout << "\tLa figura se trata de un " << nombre_poligono(numero, regular) << "." << endl; /* Reconocemos de qué polígono se trata */
+
+	cout << "\tÁrea: " << area() << " u²" << endl
+	     << "\tPerímetro: " << perimetro() << " u" << endl;
 	cout << "\n\n\t\tPresiona intro para continuar...";
 	while(getchar() != '\n');
+	free_dynmem();
+	return;
+}
 
-	/* Liberamos la memoria dinámica */
+void free_dynmem() {	/* Liberamos la memoria dinámica */
 	aux = poligono->siguiente;
 	poligono->siguiente = nullptr;
 	poligono = aux;
@@ -260,27 +237,6 @@ void resultados() {
 		poligono = poligono->siguiente;
 		free(aux);
 	}
-
-	return;
-}
-
-void mostrar_poligono(struct vertice *poligono, int numero, double x_max, double y_max, double x_min, double y_min) {
-	int SCR_X = 1280;
-	int SCR_Y = 800;
-	double x, x2, y, y2;
-	double factor = menorque((SCR_X - 40) / (x_max - x_min), (SCR_Y - 40) / (y_max - y_min));
-	double diferenciax = ((SCR_X - 40) - ((x_max - x_min) * factor)) / 2;
-	double diferenciay = ((SCR_Y - 40) - ((y_max - y_min) * factor)) / 2;
-	for(int i = 0; i < numero; i++) {
-		x = (20 + diferenciax) + (poligono->x - x_min) * (factor);
-		y = (SCR_Y-(20 + diferenciay)) - (poligono->y - y_min) * (factor);
-		x2 = (20 + diferenciax) + (poligono->siguiente->x - x_min) * (factor);
-		y2 = (SCR_Y - (20 + diferenciay)) - (poligono->siguiente->y - y_min) * (factor);
-		//textprintf_ex(screen, font, x, y, makecol(255, 255, 255),-1, "(%.2f,%.2f)",poligono->x,poligono->y);
-		poligono = poligono->siguiente;
-	}
-	x = (20 + diferenciax) + (x_max - x_min) * (factor) / 2;
-	y = (SCR_Y - (20 + diferenciay)) - (y_max - y_min) * (factor) / 2;
 	return;
 }
 
@@ -318,24 +274,27 @@ int lados_angulos(struct vertice *poligono, int lados) {
 	return regular;
 }
 
-double mayorque(double x, double y) {
-	if(x > y) return x;
-	else return y;
+double area() {   /* Hallamos el área */
+	double x, y;
+	for(int i = 0; i < numero; i++) {
+		x += poligono->x * (poligono->siguiente)->y;
+		y += poligono->y * (poligono->siguiente)->x;
+		poligono = poligono->siguiente;
+	}
+	return fabsf(x - y) / 2;
 }
 
-double menorque(double x, double y) {
-	if(x < y) return x;
-	else return y;
+double perimetro() {   /* Calculamos el perímetro */
+	double peri;
+	for(int i = 0; i < numero; i++) {
+		peri += poligono->arista_poste;
+		poligono = poligono->siguiente;
+	}
+	return peri;
 }
 
 double redondea(double r, int n_digit) {
-	printf("Número 1: %lf", r);
-	printf("Decimales 1: %d", n_digit);
-	while(getchar() != '\n');
 	int n = pow(10, n_digit);
 	r = ((float)((int)(r * n + 0.5))) / n;
-	printf("Número 2: %lf", r);
-	printf("Decimales 2: %d", n);
-	while(getchar() != '\n');
 	return r;
 }
