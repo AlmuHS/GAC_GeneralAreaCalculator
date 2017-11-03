@@ -30,24 +30,56 @@ struct vertice {
 } vertice;
 
 struct vertice *poligono, *aux;
-int regular;
-int numero = 0;
+
+class Fig {
+	private:
+		double a, peri;
+		int lados, r;
+	public:
+		double area() {
+			return a;
+		}
+		double perimetro() {
+			return peri;
+		}
+		string nombre() {
+			string pol_peque[] = {"","henágono", "dígono", "triángulo", "cuadrángulo", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+			string pol_peque2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
+			string pol_grande[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+		
+			if(lados >= 100) return "";
+			if(lados >= 20) return pol_grande[lados / 10] + pol_peque2[lados % 10] + "gono";
+			return pol_peque[lados];
+		}
+		string regular() {
+			if(!r) return "irregular";
+			return "regular";
+		}
+		Fig(int lados, int r) : lados(lados), r(r) {
+			double x, y;
+			for(int i = 0; i < lados; i++) {
+				x += poligono->x * (poligono->siguiente)->y;
+				y += poligono->y * (poligono->siguiente)->x;
+				peri += poligono->arista_poste;
+				poligono = poligono->siguiente;
+			}
+			a = abs(x - y) / 2;
+		}
+};
+
+int numero, regular;
 const long double PI = 3.141592653589793115997963468544185161590576171875;
 
 void cabecera();
-void resultados();
-void free_dynmem();
-string nombre_poligono(int lados, int reg);
-int lados_angulos(struct vertice *poligono, int lados);
-double area();
-double perimetro();
+void resultados(int numero, int regular);
+void free_dynmem(int numero);
+int lados_angulos(struct vertice *poligono, int lados, int regular);
 double redondea(double r, int n_digit);
 
 int main() {
 	cout << setprecision(2) << fixed;
-	numero = 0;
 	double angulo;
-	char menu_resp, resp;
+	char menu_resp;
 	cabecera();
 	cout << "\n\tSeleccione una opción del menú.\n"
 	     << "\n\t\ta) Calcular el area de cualquier polígono a"
@@ -61,17 +93,17 @@ int main() {
 	while(getchar() != '\n');
 	if(menu_resp >= 90) menu_resp = menu_resp - 32;
 	switch(menu_resp) {
-		case 'A': {
+		case 'A':
+			char resp;
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
 			poligono = aux;
-			char resp;
 			do {
 				cabecera();
 				cout << "\n\tPor favor, introduzca las coordenadas de los vértices del "
 				     << "polí-\n\tgono en sentido horario.\n";
 				for(int i = 0; i < numero; i++) {
 					if(i % 4 == 0) cout << "\n";
-					cout << "\t(" << poligono->x << ", " << poligono->y <<") ";
+					cout << "\t(" << poligono->x << ", " << poligono->y << ") ";
 					poligono = poligono->siguiente;
 				}
 				cout << "\n\n";
@@ -98,10 +130,9 @@ int main() {
 				}
 				else resp = 'S';
 			} while(resp == 'S');
-			regular = lados_angulos(poligono, numero);
-			resultados();
+			regular = lados_angulos(poligono, numero, regular);
+			resultados(numero, regular);
 			break;
-		}
 		case 'B':
 			double lado;
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
@@ -141,7 +172,7 @@ int main() {
 				aux->arista_poste = lado;
 			}
 			aux->siguiente = poligono;
-			resultados();
+			resultados(numero, regular);
 			break;
 		case 'C':
 			double x, y;
@@ -183,7 +214,7 @@ int main() {
 				aux->siguiente = poligono;
 				numero++;
 			} while(((numero < 3)) || !(((redondea(x, 6)) == redondea(poligono->x, 6)) && ((redondea(y, 6)) == redondea(poligono->y, 6))));
-			resultados();
+			resultados(numero, regular);
 			break;
 		case 'S': return EXIT_SUCCESS;
 		default:
@@ -205,7 +236,8 @@ void cabecera() {
 	return;
 }
 
-void resultados() {
+void resultados(int numero, int regular) {
+	Fig figura(numero, regular);
 	cabecera();
 	cout << "\n\t\t\t\tResultados:\n\n"
 	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
@@ -217,18 +249,18 @@ void resultados() {
 		poligono = poligono->siguiente;
 	}
 	cout << "\n\n\tEs un polígono de " << numero <<" vértices." << endl;
-	if(numero >= 100) cout << "\tSe desconoce el nombre de la figura." << endl;
-	else cout << "\tLa figura se trata de un " << nombre_poligono(numero, regular) << "." << endl; /* Reconocemos de qué polígono se trata */
+	if(figura.nombre() == "") cout << "\tSe desconoce el nombre de la figura." << endl;
+	else cout << "\tLa figura se trata de un " << figura.nombre() << " " << figura.regular() << "." << endl;
 
-	cout << "\tÁrea: " << area() << " u²" << endl
-	     << "\tPerímetro: " << perimetro() << " u" << endl;
+	cout << "\tÁrea: " << figura.area() << " u²" << endl
+	     << "\tPerímetro: " << figura.perimetro() << " u" << endl;
 	cout << "\n\n\t\tPresiona intro para continuar...";
 	while(getchar() != '\n');
-	free_dynmem();
+	free_dynmem(numero);
 	return;
 }
 
-void free_dynmem() {	/* Liberamos la memoria dinámica */
+void free_dynmem(int numero) {	/* Liberamos la memoria dinámica */
 	aux = poligono->siguiente;
 	poligono->siguiente = nullptr;
 	poligono = aux;
@@ -240,21 +272,8 @@ void free_dynmem() {	/* Liberamos la memoria dinámica */
 	return;
 }
 
-string nombre_poligono(int lados, int reg) {
-	string pol_peque[] = {"","henágono", "dígono", "triángulo", "cuadrángulo", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
-	string pol_peque2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
-	string pol_grande[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
-	string nombre;
 
-	if(lados >= 100) return "";
-	if(lados >= 20) nombre = pol_grande[lados / 10] + pol_peque2[lados % 10] + "gono";
-	else nombre = pol_peque[lados];
-	if(!reg) nombre += " irregular";
-	else nombre += " regular";
-	return nombre;
-}
-
-int lados_angulos(struct vertice *poligono, int lados) {
+int lados_angulos(struct vertice *poligono, int lados, int regular) {
 	double angulo_temp;
 	double ax, ay, bx, by, cx, cy;
 	for(int i = 0; i < lados; i++) {
@@ -269,28 +288,9 @@ int lados_angulos(struct vertice *poligono, int lados) {
 
 		poligono = poligono->siguiente;
 		if(i == 0) angulo_temp = poligono->angulo;
-		else if(angulo_temp != poligono->angulo) regular = 0;
+		else if(angulo_temp != poligono->angulo) regular = 1;
 	}
 	return regular;
-}
-
-double area() {   /* Hallamos el área */
-	double x, y;
-	for(int i = 0; i < numero; i++) {
-		x += poligono->x * (poligono->siguiente)->y;
-		y += poligono->y * (poligono->siguiente)->x;
-		poligono = poligono->siguiente;
-	}
-	return fabsf(x - y) / 2;
-}
-
-double perimetro() {   /* Calculamos el perímetro */
-	double peri;
-	for(int i = 0; i < numero; i++) {
-		peri += poligono->arista_poste;
-		poligono = poligono->siguiente;
-	}
-	return peri;
 }
 
 double redondea(double r, int n_digit) {
