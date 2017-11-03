@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #define PI 3.14159265358979323846
 #define SCR_X 1280
@@ -45,18 +46,19 @@ double menorque(double x, double y);
 double redondea(double r, int n_digit);
 
 int main() {
+	cout << setprecision(2) << fixed;
 	numero = 0;
 	double angulo;
 	char menu_resp, resp;
 	cabecera();
-	printf( "\n\tSeleccione una opción del menú.\n"
-	        "\n\t\ta) Calcular el area de cualquier polígono a"
-	        "\n\t\t partir de las coordenadas de los vértices."
-	        "\n\t\tb) Calcular área de un polígono regular."
-	        "\n\t\tc) Calcular área de un polígono cualquiera,"
-	        "\n\t\t introduciendo lados y ángulos."
-	        "\n\n\t\ts) Salir"
-	        "\n\n\n\t\t\tRespuesta: ");
+	cout << "\n\tSeleccione una opción del menú.\n"
+	     << "\n\t\ta) Calcular el area de cualquier polígono a"
+	     << "\n\t\t partir de las coordenadas de los vértices."
+	     << "\n\t\tb) Calcular área de un polígono regular."
+	     << "\n\t\tc) Calcular área de un polígono cualquiera,"
+	     << "\n\t\t introduciendo lados y ángulos."
+	     << "\n\n\t\ts) Salir" << endl;
+	cout << "\n\n\t\t\tRespuesta: ";
 	scanf("%c", &menu_resp);
 	while(getchar() != '\n');
 	if(menu_resp >= 90) menu_resp = menu_resp - 32;
@@ -67,14 +69,14 @@ int main() {
 			char resp;
 			do {
 				cabecera();
-				printf("\n\tPor favor, introduzca las coordenadas de los vértices del "
-				       "polí-\n\tgono en sentido horario.\n");
+				cout << "\n\tPor favor, introduzca las coordenadas de los vértices del "
+				     << "polí-\n\tgono en sentido horario.\n";
 				for(int i = 0; i < numero; i++) {
-					if(i % 4 == 0) printf("\n");
-					printf("\t(%.2f, %.2f) ", poligono->x, poligono->y);
+					if(i % 4 == 0) cout << "\n";
+					cout << "\t(" << poligono->x << ", " << poligono->y <<") ";
 					poligono = poligono->siguiente;
 				}
-				printf("\n\n");
+				cout << "\n\n";
 
 				if(resp == 'S') {
 					aux->siguiente = (struct vertice*) malloc(sizeof(struct vertice));
@@ -82,15 +84,15 @@ int main() {
 				}
 
 				numero++;
-				printf("\tVértice %d\n", numero);
-				printf("\tx: ");
+				cout << "\tVértice " << numero << "\n";
+				cout << "\tx: ";
 				scanf("%lf", &(aux->x));
-				printf("\ty: ");
+				cout << "\ty: ";
 				scanf("%lf", &(aux->y));
 				aux->siguiente = poligono;
 				do {
 					if(numero >= 3) {
-						printf("\n\t\t¿Desea introducir otro vértice? (S/N) ");
+						cout << "\n\t\t¿Desea introducir otro vértice? (S/N) ";
 						resp = getchar();
 						while(getchar() != '\n');
 						if(resp >= 90) resp = resp - 32;
@@ -108,26 +110,26 @@ int main() {
 			poligono = aux;
 			do {
 				cabecera();
-				printf( "\n\tPor favor, introduzca el número de vértices del "
-			        "polígono (no puede ser menor de 3).\n\n");
-				printf( "\tNúmero: ");
+				cout << "\n\tPor favor, introduzca el número de vértices del "
+				     << "polígono (no puede ser menor de 3).\n\n"
+				     << "\tNúmero: ";
 				scanf("%d", &numero);
 				while(getchar() != '\n');
 			} while(numero < 3);
 			angulo = 180 -(360 / numero);
-			printf( "\n\tPor favor, introduzca la longitud de los lados del "
-			        "polígono.\n\n");
+			cout << "\n\tPor favor, introduzca la longitud de los lados del "
+			     << "polígono.\n\n";
 			do {
-				printf("\tLongitud: ");
+				cout << "\tLongitud: ";
 				scanf("%lf", &lado);
 				while(getchar() != '\n');
 			} while(lado <= 0);
-			printf("\n\tPor favor, introduzca las coordenadas del primer vértice"
-			       " del\n\tpolígono.\n");
-			printf("\tx: ");
+			cout << "\n\tPor favor, introduzca las coordenadas del primer vértice"
+			     << " del\n\tpolígono.\n";
+			cout << "\tx: ";
 			scanf("%lf", &(aux->x));
 			while(getchar() != '\n');
-			printf("\ty: ");
+			cout << "\ty: ";
 			scanf("%lf", &(aux->y));
 			while(getchar() != '\n');
 			aux->angulo = angulo;
@@ -148,33 +150,31 @@ int main() {
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
 			poligono = aux;
 			cabecera();
-			printf("\n\tPor favor, introduzca las coordenadas del primer vértice"
-			       " del\n\tpolígono.\n");
-			printf("\tx: ");
+			cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del"
+			     << "\n\tpolígono.\n";
+			cout << "\tx: ";
 			scanf("%lf", &x);
 			while(getchar() != '\n');
-			printf("\ty: ");
+			cout << "\ty: ";
 			scanf("%lf", &y);
 			while(getchar() != '\n');
 			do {
 				cabecera();
 				for(int i = 0; i < numero; i++) {
-					if(i % 4 == 0) printf("\n");
-					printf("\t(%.2G, %.2G) ", poligono->x, poligono->y);
+					if(i % 4 == 0) cout << "\n";
+					cout << "\t(" << poligono->x << ", " << poligono->y << ") ";
 					poligono = poligono->siguiente;
 				}
 				if(numero >= 1) {
 					aux->siguiente = (struct vertice*) malloc(sizeof(struct vertice));
 					aux = aux->siguiente;
 				}
-				printf( "\n\tPor favor, introduzca la amplitud del %dº ángulo del "
-				        "polígono.\n", numero + 1);
-				printf( "\n\tAmplitud (en grados): ");
+				cout << "\n\tPor favor, introduzca la amplitud del " << numero + 1 << "º ángulo del polígono.\n";
+				cout << "\n\tAmplitud (en grados): ";
 				scanf("%lf", &aux->angulo);
 				while(getchar() != '\n');
-				printf( "\n\tPor favor, introduzca la longitud del %dº lado del "
-				        "polígono.\n", numero + 1);
-				printf( "\n\tLongitud: ");
+				cout << "\n\tPor favor, introduzca la longitud del " << numero + 1 << "º lado del polígono.\n";
+				cout << "\n\tLongitud: ";
 				scanf("%lf", &aux->arista_poste);
 				while(getchar() != '\n');
 				aux->x = x;
@@ -189,8 +189,8 @@ int main() {
 			break;
 		case 'S': return EXIT_SUCCESS;
 		default:
-			printf("\n\n\t\tOpción seleccionada incorrecta.\n"
-			       "Presiona intro para continuar...");
+			cout << "\n\n\t\tOpción seleccionada incorrecta.\n"
+			     << "Presiona intro para continuar...";
 			while(getchar() != '\n');
 	}
 	main();
@@ -200,10 +200,10 @@ int main() {
 void cabecera() {
 	system("clear");
 	int frame_length = 80;
-	for(int i = 0; i < frame_length; i++) printf("=");
-	printf("\n\t\t\t CALCULADORA DE ÁREAS\n");
-	for(int i = 0; i < frame_length; i++) printf("=");
-	printf("\n");
+	for(int i = 0; i < frame_length; i++) cout << "=";
+	cout << "\n\t\tCALCULADORA DE ÁREAS\n";
+	for(int i = 0; i < frame_length; i++) cout << "=";
+	cout << endl;
 	return;
 }
 
@@ -233,24 +233,24 @@ void resultados() {
 
 	/* Interfaz */
 	cabecera();
-	printf("\n\t\t\t\tResultados:\n\n"
-	       "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist");
+	cout << "\n\t\t\t\tResultados:\n\n"
+	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
 	for(int i = 0; i < numero; i++) {
-		if(i % 1 == 0) printf("\n");
-		printf("%d\t(%.2f, %.2f) <) %.2fº", i + 1, poligono->x, poligono->y, poligono->angulo);
-		printf(" \t(%.2f, %.2f) <) %.2fº", poligono->siguiente->x, poligono->siguiente->y, poligono->siguiente->angulo);
-		printf(" \t|%.2f|", poligono->arista_poste);
+		if(i % 1 == 0) cout << endl;
+		cout << i + 1 << "\t(" << poligono->x << ", " << poligono->y << ") <) " << poligono->angulo << "º"
+		     << " \t(" << poligono->siguiente->x << ", " << poligono->siguiente->y << ") <) " << poligono->siguiente->angulo << "º"
+		     << " \t|" << poligono->arista_poste << "|";
 		poligono = poligono->siguiente;
 	}
 	//nombre_poligono(numero, regular); /* Reconocemos de qué polígono se trata */
-	printf("\n\n\tEs un polígono de %d vértices.\n", numero);
-	if(numero >= 100) printf("\tSe desconoce el nombre de la figura.\n");
+	cout << "\n\n\tEs un polígono de " << numero <<" vértices." << endl;
+	if(numero >= 100) cout << "\tSe desconoce el nombre de la figura." << endl;
 	else cout << "\tLa figura se trata de un " << nombre_poligono(numero, regular) << "." << endl;
 	
-	printf("\tÁrea: %G u²\n", area);
-	printf("\tPerímetro: %G u\n", peri);
+	cout << "\tÁrea: " << area << " u²" << endl
+	     << "\tPerímetro: " << peri << " u" << endl;
 	mostrar_poligono(poligono, numero, x_max, y_max, x_min, y_min);
-	printf("\n\n\t\tPresiona intro para continuar...");
+	cout << "\n\n\t\tPresiona intro para continuar...";
 	while(getchar() != '\n');
 
 	/* Liberamos la memoria dinámica */
