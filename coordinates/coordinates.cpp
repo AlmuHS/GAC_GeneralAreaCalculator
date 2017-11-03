@@ -88,15 +88,15 @@ int main() {
 				cout << "\ty: ";
 				cin >> aux->y;
 				aux->siguiente = poligono;
-				do {
-					if(numero >= 3) {
+				if(numero >= 3) {
+					do {
 						cout << "\n\t\t¿Desea introducir otro vértice? (S/N) ";
-						resp = getchar();
+						cin >> resp;
 						while(getchar() != '\n');
 						if(resp >= 90) resp = resp - 32;
-					}
-					else resp = 'S';
-				} while(resp != 'N' && resp != 'S');
+					} while(resp != 'N' && resp != 'S');
+				}
+				else resp = 'S';
 			} while(resp == 'S');
 			regular = lados_angulos(poligono, numero);
 			resultados();
