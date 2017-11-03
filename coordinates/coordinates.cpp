@@ -18,10 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <string.h>
+#include <iostream>
+#include <string>
 #define PI 3.14159265358979323846
 #define SCR_X 1280
 #define SCR_Y 800
+
+using namespace std;
 
 struct vertice {
 	double x, y, angulo, arista_poste;
@@ -35,7 +38,7 @@ int numero = 0;
 void cabecera();
 void resultados();
 void mostrar_poligono(struct vertice *poligono, int numero, double x_max, double y_max, double x_min, double y_min);
-void nombre_poligono(int lados, int reg);
+string nombre_poligono(int lados, int reg);
 int lados_angulos(struct vertice *poligono, int lados);
 double mayorque(double x, double y);
 double menorque(double x, double y);
@@ -58,7 +61,7 @@ int main() {
 	while(getchar() != '\n');
 	if(menu_resp >= 90) menu_resp = menu_resp - 32;
 	switch(menu_resp) {
-		case 'A':
+		case 'A': {
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
 			poligono = aux;
 			char resp;
@@ -98,8 +101,8 @@ int main() {
 			regular = lados_angulos(poligono, numero);
 			resultados();
 			break;
+		}
 		case 'B':
-			int numero;
 			double lado;
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
 			poligono = aux;
@@ -184,8 +187,7 @@ int main() {
 			} while(((numero < 3)) || !(((redondea(x, 6)) == redondea(poligono->x, 6)) && ((redondea(y, 6)) == redondea(poligono->y, 6))));
 			resultados();
 			break;
-		case 'S':
-			return EXIT_SUCCESS;
+		case 'S': return EXIT_SUCCESS;
 		default:
 			printf("\n\n\t\tOpción seleccionada incorrecta.\n"
 			       "Presiona intro para continuar...");
@@ -207,9 +209,7 @@ void cabecera() {
 
 void resultados() {
 	/* Hallamos el área */
-	double area = 0;
-	double x = 0;
-	double y = 0;
+	double area, x, y;
 	for(int i = 0; i < numero; i++) {
 		x = x + (poligono->x * (poligono->siguiente)->y);
 		y = y + (poligono->y * (poligono->siguiente)->x);
@@ -242,7 +242,11 @@ void resultados() {
 		printf(" \t|%.2f|", poligono->arista_poste);
 		poligono = poligono->siguiente;
 	}
-	nombre_poligono(numero, regular); /* Reconocemos de qué polígono se trata */
+	//nombre_poligono(numero, regular); /* Reconocemos de qué polígono se trata */
+	printf("\n\n\tEs un polígono de %d vértices.\n", numero);
+	if(numero >= 100) printf("\tSe desconoce el nombre de la figura.\n");
+	else cout << "\tLa figura se trata de un " << nombre_poligono(numero, regular) << "." << endl;
+	
 	printf("\tÁrea: %G u²\n", area);
 	printf("\tPerímetro: %G u\n", peri);
 	mostrar_poligono(poligono, numero, x_max, y_max, x_min, y_min);
@@ -280,22 +284,18 @@ void mostrar_poligono(struct vertice *poligono, int numero, double x_max, double
 	return;
 }
 
-void nombre_poligono(int lados, int reg) {
-	char *pol_peque[]= {"","henágono", "dígono", "triángulo", "cuadrángulo", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
-	char *pol_peque2[]= {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
-	char *pol_grande[]= {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+string nombre_poligono(int lados, int reg) {
+	string pol_peque[] = {"","henágono", "dígono", "triángulo", "cuadrángulo", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+	string pol_peque2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
+	string pol_grande[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+	string nombre;
 
-	printf("\n\n\tEs un polígono de %d vértices.\n", lados);
-	if(lados >= 100) {
-		printf("\tSe desconoce el nombre de la figura.\n");
-		return;
-	}
-	printf("\tLa figura se trata de un ");
-	if(lados >= 20) printf("%s%sgono ", pol_grande[lados / 10], pol_peque2[lados % 10]);
-	else printf("%s ", pol_peque[lados]);
-	if(!reg) printf("ir");
-	printf("regular.\n");
-	return;
+	if(lados >= 100) return "";
+	if(lados >= 20) nombre = pol_grande[lados / 10] + pol_peque2[lados % 10] + "gono";
+	else nombre = pol_peque[lados];
+	if(!reg) nombre += " irregular";
+	else nombre += " regular";
+	return nombre;
 }
 
 int lados_angulos(struct vertice *poligono, int lados) {
