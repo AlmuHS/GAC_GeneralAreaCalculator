@@ -59,7 +59,7 @@ int main() {
 	     << "\n\t\t introduciendo lados y ángulos."
 	     << "\n\n\t\ts) Salir" << endl;
 	cout << "\n\n\t\t\tRespuesta: ";
-	scanf("%c", &menu_resp);
+	cin >> menu_resp;
 	while(getchar() != '\n');
 	if(menu_resp >= 90) menu_resp = menu_resp - 32;
 	switch(menu_resp) {
@@ -86,9 +86,9 @@ int main() {
 				numero++;
 				cout << "\tVértice " << numero << "\n";
 				cout << "\tx: ";
-				scanf("%lf", &(aux->x));
+				cin >> aux->x;
 				cout << "\ty: ";
-				scanf("%lf", &(aux->y));
+				cin >> aux->y;
 				aux->siguiente = poligono;
 				do {
 					if(numero >= 3) {
@@ -113,7 +113,7 @@ int main() {
 				cout << "\n\tPor favor, introduzca el número de vértices del "
 				     << "polígono (no puede ser menor de 3).\n\n"
 				     << "\tNúmero: ";
-				scanf("%d", &numero);
+				cin >> numero;
 				while(getchar() != '\n');
 			} while(numero < 3);
 			angulo = 180 -(360 / numero);
@@ -121,16 +121,16 @@ int main() {
 			     << "polígono.\n\n";
 			do {
 				cout << "\tLongitud: ";
-				scanf("%lf", &lado);
+				cin >> lado;
 				while(getchar() != '\n');
 			} while(lado <= 0);
 			cout << "\n\tPor favor, introduzca las coordenadas del primer vértice"
 			     << " del\n\tpolígono.\n";
 			cout << "\tx: ";
-			scanf("%lf", &(aux->x));
+			cin >> aux->x;
 			while(getchar() != '\n');
 			cout << "\ty: ";
-			scanf("%lf", &(aux->y));
+			cin >> aux->y;
 			while(getchar() != '\n');
 			aux->angulo = angulo;
 			aux->arista_poste = lado;
@@ -153,10 +153,10 @@ int main() {
 			cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del"
 			     << "\n\tpolígono.\n";
 			cout << "\tx: ";
-			scanf("%lf", &x);
+			cin >> x;
 			while(getchar() != '\n');
 			cout << "\ty: ";
-			scanf("%lf", &y);
+			cin >> y;
 			while(getchar() != '\n');
 			do {
 				cabecera();
@@ -171,11 +171,11 @@ int main() {
 				}
 				cout << "\n\tPor favor, introduzca la amplitud del " << numero + 1 << "º ángulo del polígono.\n";
 				cout << "\n\tAmplitud (en grados): ";
-				scanf("%lf", &aux->angulo);
+				cin >> aux->angulo;
 				while(getchar() != '\n');
 				cout << "\n\tPor favor, introduzca la longitud del " << numero + 1 << "º lado del polígono.\n";
 				cout << "\n\tLongitud: ";
-				scanf("%lf", &aux->arista_poste);
+				cin >> aux->arista_poste;
 				while(getchar() != '\n');
 				aux->x = x;
 				aux->y = y;
