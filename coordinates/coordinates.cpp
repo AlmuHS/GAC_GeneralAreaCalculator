@@ -17,13 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <string>
-#define PI 3.14159265358979323846
-#define SCR_X 1280
-#define SCR_Y 800
 
 using namespace std;
 
@@ -35,6 +32,7 @@ struct vertice {
 struct vertice *poligono, *aux;
 int regular;
 int numero = 0;
+const long double PI = 3.141592653589793115997963468544185161590576171875;
 
 void cabecera();
 void resultados();
@@ -255,7 +253,7 @@ void resultados() {
 
 	/* Liberamos la memoria dinámica */
 	aux = poligono->siguiente;
-	poligono->siguiente = NULL;
+	poligono->siguiente = nullptr;
 	poligono = aux;
 	for(int i = 0; i < numero; i++) {
 		aux = poligono;
@@ -267,6 +265,8 @@ void resultados() {
 }
 
 void mostrar_poligono(struct vertice *poligono, int numero, double x_max, double y_max, double x_min, double y_min) {
+	int SCR_X = 1280;
+	int SCR_Y = 800;
 	double x, x2, y, y2;
 	double factor = menorque((SCR_X - 40) / (x_max - x_min), (SCR_Y - 40) / (y_max - y_min));
 	double diferenciax = ((SCR_X - 40) - ((x_max - x_min) * factor)) / 2;
@@ -329,7 +329,13 @@ double menorque(double x, double y) {
 }
 
 double redondea(double r, int n_digit) {
+	printf("Número 1: %lf", r);
+	printf("Decimales 1: %d", n_digit);
+	while(getchar() != '\n');
 	int n = pow(10, n_digit);
 	r = ((float)((int)(r * n + 0.5))) / n;
+	printf("Número 2: %lf", r);
+	printf("Decimales 2: %d", n);
+	while(getchar() != '\n');
 	return r;
 }
