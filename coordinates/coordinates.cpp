@@ -37,58 +37,71 @@ class Fig {
 		string reg = "irregular";
 	public:
 		int lados = 0;
-		void setValues(struct vertice *poligono) {
-			setRegular(poligono);
-			setSize();
-		}
-		void setSize() {
-			double x, y;
-			for(int i = 0; i < lados; i++) {
-				x += poligono->x * (poligono->siguiente)->y;
-				y += poligono->y * (poligono->siguiente)->x;
-				peri += poligono->arista_poste;
-				poligono = poligono->siguiente;
-			}
-			a = abs(x - y) / 2;
-		}
-		double area() {
-			return a;
-		}
-		double perimetro() {
-			return peri;
-		}
-		string nombre() {
-			string pol_peque[] = {"","henágono", "dígono", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
-			string pol_peque2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
-			string pol_grande[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
-		
-			if(lados >= 100) return "";
-			if(lados >= 20) return pol_grande[lados / 10] + pol_peque2[lados % 10] + "gono";
-			return pol_peque[lados];
-		}
-		void setRegular(struct vertice *poligono) {
-			double angulo_temp, ax, ay, bx, by, cx, cy;
-			for(int i = 0; i < lados; i++) {
-				poligono->arista_poste = sqrt((pow(((poligono->siguiente)->x - poligono->x), 2.0)) + (pow(((poligono->siguiente)->y - poligono->y), 2.0)));
-				ax = (poligono->siguiente)->x;
-				ay = (poligono->siguiente)->y;
-				bx = ((poligono->siguiente)->siguiente)->x;
-				by = ((poligono->siguiente)->siguiente)->y;
-				cx = poligono->x;
-				cy = poligono->y;
-				(poligono->siguiente)->angulo = acos((((bx - ax) * (cx - ax)) + ((by -ay) * (cy - ay))) / (sqrt(pow((bx - ax), 2) + pow((by - ay), 2)) * (sqrt(pow((cx - ax), 2) + pow((cy - ay), 2))))) * 180 / PI;
-				poligono = poligono->siguiente;
-				if(i == 0) angulo_temp = poligono->angulo;
-				else if(angulo_temp != poligono->angulo) reg = "regular";
-			}
-		}
-		string regular() {
-			return reg;
-		}
+		double area();
+		double perimetro();
+		string nombre();
+		string regular();
+		void setSize();
+		void setRegular(struct vertice *poligono);
+		void setValues(struct vertice *poligono);
 };
 
+double Fig::area() {
+	return a;
+}
+
+double Fig::perimetro() {
+	return peri;
+}
+
+string Fig::nombre() {
+	string pol_peque[] = {"","henágono", "dígono", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+	string pol_peque2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
+	string pol_grande[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+
+	if(lados >= 100) return "";
+	if(lados >= 20) return pol_grande[lados / 10] + pol_peque2[lados % 10] + "gono";
+	return pol_peque[lados];
+}
+
+string Fig::regular() {
+	return reg;
+}
+
+void Fig::setSize() {
+	double x, y;
+	for(int i = 0; i < lados; i++) {
+		x += poligono->x * (poligono->siguiente)->y;
+		y += poligono->y * (poligono->siguiente)->x;
+		peri += poligono->arista_poste;
+		poligono = poligono->siguiente;
+	}
+	a = abs(x - y) / 2;
+}
+
+void Fig::setRegular(struct vertice *poligono) {
+	double angulo_temp, ax, ay, bx, by, cx, cy;
+	for(int i = 0; i < lados; i++) {
+		poligono->arista_poste = sqrt((pow(((poligono->siguiente)->x - poligono->x), 2.0)) + (pow(((poligono->siguiente)->y - poligono->y), 2.0)));
+		ax = (poligono->siguiente)->x;
+		ay = (poligono->siguiente)->y;
+		bx = ((poligono->siguiente)->siguiente)->x;
+		by = ((poligono->siguiente)->siguiente)->y;
+		cx = poligono->x;
+		cy = poligono->y;
+		(poligono->siguiente)->angulo = acos((((bx - ax) * (cx - ax)) + ((by -ay) * (cy - ay))) / (sqrt(pow((bx - ax), 2) + pow((by - ay), 2)) * (sqrt(pow((cx - ax), 2) + pow((cy - ay), 2))))) * 180 / PI;
+		poligono = poligono->siguiente;
+		if(i == 0) angulo_temp = poligono->angulo;
+		else if(angulo_temp != poligono->angulo) reg = "regular";
+	}
+}
+
+void Fig::setValues(struct vertice *poligono) {
+	setSize();
+	setRegular(poligono);
+}
+
 void cabecera();
-void resultados(Fig* figura);
 void free_dynmem(int numero);
 double redondea(double r, int n_digit);
 
