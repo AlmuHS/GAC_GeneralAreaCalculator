@@ -34,7 +34,7 @@ const long double PI = 3.141592653589793115997963468544185161590576171875;
 class Fig {
 	private:
 		double a, peri;
-		string r = "irregular";
+		string reg = "irregular";
 	public:
 		int lados = 0;
 		void setValues(struct vertice *poligono) {
@@ -79,11 +79,11 @@ class Fig {
 				(poligono->siguiente)->angulo = acos((((bx - ax) * (cx - ax)) + ((by -ay) * (cy - ay))) / (sqrt(pow((bx - ax), 2) + pow((by - ay), 2)) * (sqrt(pow((cx - ax), 2) + pow((cy - ay), 2))))) * 180 / PI;
 				poligono = poligono->siguiente;
 				if(i == 0) angulo_temp = poligono->angulo;
-				else if(angulo_temp != poligono->angulo) r = "regular";
+				else if(angulo_temp != poligono->angulo) reg = "regular";
 			}
 		}
 		string regular() {
-			return r;
+			return reg;
 		}
 };
 
