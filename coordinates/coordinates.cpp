@@ -15,11 +15,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <cmath>
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
+#include <cmath>
 #include <string>
 
 using namespace std;
@@ -148,9 +147,6 @@ int main() {
 				}
 				else resp = 'S';
 			} while(resp == 'S');
-			figura.setValues(poligono);
-			resultados(&figura);
-			free_dynmem(figura.lados);
 			break;
 		case 'B':
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
@@ -191,9 +187,6 @@ int main() {
 				aux->arista_poste = lado;
 			}
 			aux->siguiente = poligono;
-			figura.setValues(poligono);
-			resultados(&figura);
-			free_dynmem(figura.lados);
 			break;
 		case 'C':
 			aux = (struct vertice*) malloc(sizeof(struct vertice));
@@ -236,16 +229,34 @@ int main() {
 				aux->siguiente = poligono;
 				figura.lados++;
 			} while(((figura.lados < 3)) || !(((redondea(x, 6)) == redondea(poligono->x, 6)) && ((redondea(y, 6)) == redondea(poligono->y, 6))));
-			figura.setValues(poligono);
-			resultados(&figura);
-			free_dynmem(figura.lados);
 			break;
 		case 'S': return EXIT_SUCCESS;
 		default:
 			cout << "\n\n\t\tOpción seleccionada incorrecta.\n"
 			     << "Presiona intro para continuar...";
 			while(getchar() != '\n');
+			main();
+			return EXIT_SUCCESS;
 	}
+	figura.setValues(poligono);
+	cabecera();
+	cout << "\n\t\t\t\tResultados:\n\n"
+	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
+	for(int i = 1; i <= figura.lados; i++) {
+		cout << "\n";
+		cout << i << "\t(" << poligono->x << ", " << poligono->y << ") <) " << poligono->angulo << "º"
+		     << " \t(" << poligono->siguiente->x << ", " << poligono->siguiente->y << ") <) " << poligono->siguiente->angulo << "º"
+		     << " \t|" << poligono->arista_poste << "|";
+		poligono = poligono->siguiente;
+	}
+	free_dynmem(figura.lados);
+	cout << "\n\n\tEs un polígono de " << figura.lados <<" vértices.\n";
+	if(figura.nombre() == "") cout << "\tSe desconoce el nombre de la figura.\n";
+	else cout << "\tLa figura se trata de un " << figura.nombre() << " " << figura.regular() << ".\n";
+	cout << "\tÁrea: " << figura.area() << " u²\n"
+	     << "\tPerímetro: " << figura.perimetro() << " u" << endl;
+	cout << "\n\n\t\tPresiona intro para continuar...";
+	while(getchar() != '\n');
 	main();
 	return EXIT_SUCCESS;
 }
@@ -254,31 +265,9 @@ void cabecera() {
 	system("clear");
 	int frame_length = 80;
 	for(int i = 0; i < frame_length; i++) cout << "=";
-	cout << "\n\t\tCALCULADORA DE ÁREAS\n";
+	cout << "\n\t\t\tCALCULADORA DE ÁREAS\n";
 	for(int i = 0; i < frame_length; i++) cout << "=";
 	cout << endl;
-	return;
-}
-
-void resultados(Fig* figura) {
-	cabecera();
-	cout << "\n\t\t\t\tResultados:\n\n"
-	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
-	for(int i = 1; i <= figura->lados; i++) {
-		cout << endl;
-		cout << i << "\t(" << poligono->x << ", " << poligono->y << ") <) " << poligono->angulo << "º"
-		     << " \t(" << poligono->siguiente->x << ", " << poligono->siguiente->y << ") <) " << poligono->siguiente->angulo << "º"
-		     << " \t|" << poligono->arista_poste << "|";
-		poligono = poligono->siguiente;
-	}
-	cout << "\n\n\tEs un polígono de " << figura->lados <<" vértices." << endl;
-	if(figura->nombre() == "") cout << "\tSe desconoce el nombre de la figura." << endl;
-	else cout << "\tLa figura se trata de un " << figura->nombre() << " " << figura->regular() << "." << endl;
-
-	cout << "\tÁrea: " << figura->area() << " u²" << endl
-	     << "\tPerímetro: " << figura->perimetro() << " u" << endl;
-	cout << "\n\n\t\tPresiona intro para continuar...";
-	while(getchar() != '\n');
 	return;
 }
 
