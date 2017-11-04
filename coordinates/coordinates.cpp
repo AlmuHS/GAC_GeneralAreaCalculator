@@ -28,49 +28,58 @@ struct vertice {
 	struct vertice *siguiente;
 } vertice;
 
-struct vertice *poligono, *aux;
 const long double PI = 3.141592653589793115997963468544185161590576171875;
 
 class Fig {
 	private:
+		int l = 0; /* No se inicializa solo correctamente, hay que indicar el valor inicial */
 		double a, peri;
 		string reg = "irregular";
 	public:
-		int lados = 0;
-		double area();
-		double perimetro();
-		string nombre();
-		string regular();
-		void setSize();
+		int Lados();
+		double Area();
+		double Perimetro();
+		string Nombre();
+		string Regular();
+		void setLados(int n);
+		void setSize(struct vertice *poligono);
 		void setRegular(struct vertice *poligono);
 		void setValues(struct vertice *poligono);
 };
 
-double Fig::area() {
+int Fig::Lados() {
+	return l;
+}
+
+double Fig::Area() {
 	return a;
 }
 
-double Fig::perimetro() {
+double Fig::Perimetro() {
 	return peri;
 }
 
-string Fig::nombre() {
+string Fig::Nombre() {
 	string pol_peque[] = {"","henágono", "dígono", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	string pol_peque2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
 	string pol_grande[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
 
-	if(lados >= 100) return "";
-	if(lados >= 20) return pol_grande[lados / 10] + pol_peque2[lados % 10] + "gono";
-	return pol_peque[lados];
+	if(l >= 100) return "";
+	if(l >= 20) return pol_grande[l / 10] + pol_peque2[l % 10] + "gono";
+	return pol_peque[l];
 }
 
-string Fig::regular() {
+string Fig::Regular() {
 	return reg;
 }
 
-void Fig::setSize() {
+void Fig::setLados(int n) {
+	l = n;
+}
+
+void Fig::setSize(struct vertice *poligono) {
 	double x, y;
-	for(int i = 0; i < lados; i++) {
+	for(int i = 0; i < l; i++) {
 		x += poligono->x * (poligono->siguiente)->y;
 		y += poligono->y * (poligono->siguiente)->x;
 		peri += poligono->arista_poste;
@@ -81,7 +90,7 @@ void Fig::setSize() {
 
 void Fig::setRegular(struct vertice *poligono) {
 	double angulo_temp, ax, ay, bx, by, cx, cy;
-	for(int i = 0; i < lados; i++) {
+	for(int i = 0; i < l; i++) {
 		poligono->arista_poste = sqrt((pow(((poligono->siguiente)->x - poligono->x), 2.0)) + (pow(((poligono->siguiente)->y - poligono->y), 2.0)));
 		ax = (poligono->siguiente)->x;
 		ay = (poligono->siguiente)->y;
@@ -97,12 +106,12 @@ void Fig::setRegular(struct vertice *poligono) {
 }
 
 void Fig::setValues(struct vertice *poligono) {
-	setSize();
-	setRegular(poligono);
+	setRegular(poligono); /* Si invierto el orden la primera vez que ejecuto a) el perímetro me sale a 0 */
+	setSize(poligono);
 }
 
 void cabecera();
-void free_dynmem(int numero);
+void free_dynmem(int numero, struct vertice *poligono, struct vertice *aux);
 double redondea(double r, int n_digit);
 
 int main() {
@@ -110,7 +119,7 @@ int main() {
 	char menu_resp;
 	cabecera();
 	cout << "\n\tSeleccione una opción del menú.\n"
-	     << "\n\t\ta) Calcular el area de cualquier polígono a"
+	     << "\n\t\ta) Calcular el área de cualquier polígono a"
 	     << "\n\t\t partir de las coordenadas de los vértices."
 	     << "\n\t\tb) Calcular área de un polígono regular."
 	     << "\n\t\tc) Calcular área de un polígono cualquiera,"
@@ -120,6 +129,7 @@ int main() {
 	cin >> menu_resp;
 	while(getchar() != '\n');
 	if(menu_resp >= 90) menu_resp = menu_resp - 32;
+	struct vertice *poligono, *aux;
 	Fig figura;
 	switch(menu_resp) {
 		case 'A':
@@ -131,26 +141,29 @@ int main() {
 				cabecera();
 				cout << "\n\tPor favor, introduzca las coordenadas de los vértices del polí-"
 				     << "\n\tgono en sentido horario.\n";
-				for(int i = 0; i < figura.lados; i++) {
+
+				/* Repetido en case 'C' */
+				for(int i = 0; i < figura.Lados(); i++) {
 					if(i % 4 == 0) cout << "\n";
 					cout << "\t(" << poligono->x << ", " << poligono->y << ") ";
 					poligono = poligono->siguiente;
 				}
-				cout << "\n\n";
-
-				if(resp == 'S') {
+				if(figura.Lados() >= 1) {
 					aux->siguiente = (struct vertice*) malloc(sizeof(struct vertice));
 					aux = aux->siguiente;
 				}
 
-				figura.lados++;
-				cout << "\tVértice " << figura.lados << "\n";
+
+
+				cout << "\n\n";
+				figura.setLados(figura.Lados() + 1);
+				cout << "\tVértice " << figura.Lados() << "\n";
 				cout << "\tx: ";
 				cin >> aux->x;
 				cout << "\ty: ";
 				cin >> aux->y;
 				aux->siguiente = poligono;
-				if(figura.lados >= 3) {
+				if(figura.Lados() >= 3) {
 					do {
 						cout << "\n\t\t¿Desea introducir otro vértice? (S/N) ";
 						cin >> resp;
@@ -171,9 +184,11 @@ int main() {
 				cout << "\n\tPor favor, introduzca el número de vértices del "
 				     << "polígono (no puede ser menor de 3).\n\n"
 				     << "\tNúmero: ";
-				cin >> figura.lados;
+				int intLados;
+				cin >> intLados;
+				figura.setLados(intLados);
 				while(getchar() != '\n');
-			} while(figura.lados < 3);
+			} while(figura.Lados() < 3);
 			cout << "\n\tPor favor, introduzca la longitud de los lados del "
 			     << "polígono.\n\n";
 			do {
@@ -189,12 +204,12 @@ int main() {
 			cout << "\ty: ";
 			cin >> aux->y;
 			while(getchar() != '\n');
-			aux->angulo = angulo = 180 - (360 / figura.lados);
+			aux->angulo = angulo = 180 - (360 / figura.Lados());
 			aux->arista_poste = lado;
-			for(int i = 1; i < figura.lados; i++) {
+			for(int i = 1; i < figura.Lados(); i++) {
 				aux->siguiente = (struct vertice*) malloc(sizeof(struct vertice));
-				aux->siguiente->x = aux->x + (cos(((i * (PI * 2 / figura.lados)))) * aux->arista_poste);
-				aux->siguiente->y = aux->y + (sin(((i * (PI * 2 / figura.lados)))) * aux->arista_poste);
+				aux->siguiente->x = aux->x + (cos(((i * (PI * 2 / figura.Lados())))) * aux->arista_poste);
+				aux->siguiente->y = aux->y + (sin(((i * (PI * 2 / figura.Lados())))) * aux->arista_poste);
 				aux = aux->siguiente;
 				aux->angulo = angulo;
 				aux->arista_poste = lado;
@@ -217,31 +232,36 @@ int main() {
 			while(getchar() != '\n');
 			do {
 				cabecera();
-				for(int i = 0; i < figura.lados; i++) {
+
+				/* Repetido en case 'A' */
+				for(int i = 0; i < figura.Lados(); i++) {
 					if(i % 4 == 0) cout << "\n";
 					cout << "\t(" << poligono->x << ", " << poligono->y << ") ";
 					poligono = poligono->siguiente;
 				}
-				if(figura.lados >= 1) {
+				if(figura.Lados() >= 1) {
 					aux->siguiente = (struct vertice*) malloc(sizeof(struct vertice));
 					aux = aux->siguiente;
 				}
-				cout << "\n\tPor favor, introduzca la amplitud del " << figura.lados + 1 << "º ángulo del polígono.\n";
+
+
+
+				cout << "\n\tPor favor, introduzca la amplitud del " << figura.Lados() + 1 << "º ángulo del polígono.\n";
 				cout << "\n\tAmplitud (en grados): ";
 				cin >> aux->angulo;
 				while(getchar() != '\n');
-				cout << "\n\tPor favor, introduzca la longitud del " << figura.lados + 1 << "º lado del polígono.\n";
+				cout << "\n\tPor favor, introduzca la longitud del " << figura.Lados() + 1 << "º lado del polígono.\n";
 				cout << "\n\tLongitud: ";
 				cin >> aux->arista_poste;
 				while(getchar() != '\n');
 				aux->x = x;
 				aux->y = y;
 
-				x = aux->x + (cos(figura.lados * (PI * 2 / (360 / (180 - aux->angulo)))) * aux->arista_poste);
-				y = aux->y + (sin(figura.lados * (PI * 2 / (360 / (180 - aux->angulo)))) * aux->arista_poste);
+				x = aux->x + (cos(figura.Lados() * (PI * 2 / (360 / (180 - aux->angulo)))) * aux->arista_poste);
+				y = aux->y + (sin(figura.Lados() * (PI * 2 / (360 / (180 - aux->angulo)))) * aux->arista_poste);
 				aux->siguiente = poligono;
-				figura.lados++;
-			} while(((figura.lados < 3)) || !(((redondea(x, 6)) == redondea(poligono->x, 6)) && ((redondea(y, 6)) == redondea(poligono->y, 6))));
+				figura.setLados(figura.Lados() + 1);
+			} while(((figura.Lados() < 3)) || !(((redondea(x, 6)) == redondea(poligono->x, 6)) && ((redondea(y, 6)) == redondea(poligono->y, 6))));
 			break;
 		case 'S': return EXIT_SUCCESS;
 		default:
@@ -255,21 +275,21 @@ int main() {
 	cabecera();
 	cout << "\n\t\t\t\tResultados:\n\n"
 	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
-	for(int i = 1; i <= figura.lados; i++) {
+	for(int i = 1; i <= figura.Lados(); i++) {
 		cout << "\n";
 		cout << i << "\t(" << poligono->x << ", " << poligono->y << ") <) " << poligono->angulo << "º"
 		     << " \t(" << poligono->siguiente->x << ", " << poligono->siguiente->y << ") <) " << poligono->siguiente->angulo << "º"
 		     << " \t|" << poligono->arista_poste << "|";
 		poligono = poligono->siguiente;
 	}
-	free_dynmem(figura.lados);
-	cout << "\n\n\tEs un polígono de " << figura.lados <<" vértices.\n";
-	if(figura.nombre() == "") cout << "\tSe desconoce el nombre de la figura.\n";
-	else cout << "\tLa figura se trata de un " << figura.nombre() << " " << figura.regular() << ".\n";
-	cout << "\tÁrea: " << figura.area() << " u²\n"
-	     << "\tPerímetro: " << figura.perimetro() << " u" << endl;
+	cout << "\n\n\tEs un polígono de " << figura.Lados() <<" vértices.\n";
+	if(figura.Nombre() == "") cout << "\tSe desconoce el nombre de la figura.\n";
+	else cout << "\tLa figura se trata de un " << figura.Nombre() << " " << figura.Regular() << ".\n";
+	cout << "\tÁrea: " << figura.Area() << " u²\n"
+	     << "\tPerímetro: " << figura.Perimetro() << " u" << endl;
 	cout << "\n\n\t\tPresiona intro para continuar...";
 	while(getchar() != '\n');
+	free_dynmem(figura.Lados(), poligono, aux);
 	main();
 	return EXIT_SUCCESS;
 }
@@ -284,7 +304,7 @@ void cabecera() {
 	return;
 }
 
-void free_dynmem(int numero) {	/* Liberamos la memoria dinámica */
+void free_dynmem(int numero, struct vertice *poligono, struct vertice *aux) {
 	aux = poligono->siguiente;
 	poligono->siguiente = nullptr;
 	poligono = aux;
