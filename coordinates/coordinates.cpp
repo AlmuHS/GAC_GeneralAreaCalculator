@@ -129,13 +129,14 @@ int main() {
 	cin >> menu_resp;
 	while(getchar() != '\n');
 	if(menu_resp >= 90) menu_resp = menu_resp - 32;
+
 	struct vertice *poligono, *aux;
+	aux = (struct vertice*) malloc(sizeof(struct vertice));
+	poligono = aux;
+
 	Fig figura;
 	switch(menu_resp) {
 		case 'A':
-			aux = (struct vertice*) malloc(sizeof(struct vertice));
-			poligono = aux;
-
 			char resp;
 			do {
 				cabecera();
@@ -175,9 +176,6 @@ int main() {
 			} while(resp == 'S');
 			break;
 		case 'B':
-			aux = (struct vertice*) malloc(sizeof(struct vertice));
-			poligono = aux;
-
 			double angulo, lado;
 			do {
 				cabecera();
@@ -217,9 +215,6 @@ int main() {
 			aux->siguiente = poligono;
 			break;
 		case 'C':
-			aux = (struct vertice*) malloc(sizeof(struct vertice));
-			poligono = aux;
-
 			double x, y;
 			cabecera();
 			cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del"
