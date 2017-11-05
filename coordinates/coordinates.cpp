@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <cmath>
@@ -232,11 +233,9 @@ int main() {
 
 void header() {
 	system("clear");
-	int frame_length = 80;
-	for(int i = 0; i < frame_length; i++) cout << "=";
-	cout << "\n\t\t\tCALCULADORA DE ÁREAS\n";
-	for(int i = 0; i < frame_length; i++) cout << "=";
-	cout << "\n";
+	cout << setw(80) << setfill('=') << "\n"
+	     << "\t\t\tCALCULADORA DE ÁREAS\n"
+	     << setw(80) << setfill('=') << "\n";
 }
 
 void coordinates_label(polygon &P) {
