@@ -55,8 +55,8 @@ class polygon {
 		void calcAngles(); /* No calcula bien los ángulos */
 		void calcAristaPoste();
 		void calcValues();
-		void inputB();
-		void inputC();
+		void inputB(); /* Necesita revisión */
+		void inputC(); /* Necesita revisión */
 };
 
 int polygon::Sides() {
