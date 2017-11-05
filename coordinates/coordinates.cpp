@@ -1,6 +1,7 @@
 /*
 Copyright 2011 Ángel Olivera Crego
 Copyright 2013 Cristian Corado Cordero
+Copyright 2017 Alejandro Domínguez Muñoz
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,7 +49,7 @@ class polygon {
 		bool isClosed();
 		bool isRegular();
 		void newVertex();
-		void setSides(int n); /* Implementar la gestión del número desde la clase */
+		void setSides(int n); /* Implementar la gestión del número de lados desde la clase */
 		void setX(double value, int v);
 		void setY(double value, int v);
 		void setAngle(double value, int v);
@@ -93,8 +94,8 @@ double polygon::Perimeter() {
 	return per;
 }
 
-string polygon::Name() {
-	string pol_small[] = {"","henágono", "dígono", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+string polygon::Name() {  /* Gestionar casos en los que haya menos de 3 lados */
+	string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
 	string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
 
