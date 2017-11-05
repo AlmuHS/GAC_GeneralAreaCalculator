@@ -97,7 +97,7 @@ string polygon::Name() {
 }
 
 bool polygon::isClosed() {
-	if (l >= 3 || ((vert[0].x == vert[l].x) && (vert[0].y == vert[l].y))) return true;
+	if (l >= 3 && vert[0].x == vert[l].x && vert[0].y == vert[l].y) return true;
 	else return false;
 }
 
