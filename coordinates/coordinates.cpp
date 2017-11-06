@@ -95,7 +95,8 @@ double polygon::Perimeter() {
 	return per;
 }
 
-string polygon::Name() {  /* Gestionar casos en los que haya menos de 3 lados */
+string polygon::Name() {
+	if(l < 3) return "";  /* Gestionar casos en los que haya menos de 3 lados */
 	string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
 	string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
