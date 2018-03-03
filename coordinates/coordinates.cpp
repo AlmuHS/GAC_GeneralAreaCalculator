@@ -52,6 +52,7 @@ class polygon {
 		void calcSize(); /* Evitar ejecutar los calc si ya están los valores calculados */
 		void calcValues();
 		string getName();
+		string getNameIsRegular();
 		void setSides(int n); /* Implementar la gestión del número de lados desde la clase */
 		void setX(double value, int v);
 		void setY(double value, int v);
@@ -137,10 +138,15 @@ string polygon::getName() {
 	string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
 	string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
-
+	
 	if(getSides() >= 100) return "";
 	else if(getSides() >= 20) return pol_big[getSides() / 10] + pol_small2[getSides() % 10] + "gono";
-	return pol_small[getSides()];
+	else return pol_small[getSides()];
+}
+
+string polygon::getNameIsRegular() {
+	if(isRegular()) return "regular";
+	else return "irregular";
 }
 
 void polygon::setSides(int n) {
@@ -173,7 +179,7 @@ bool polygon::isClosed() {
 }
 
 bool polygon::isRegular() {
-	if(getSides() >= 3 && getAngle(getSides()) != getAngle(getSides() - 1)) return true; /* Solo compara los dos últimos vértices, corregir */
+	if(getSides() >= 3 && getAngle(getSides()) == getAngle(getSides() - 1)) return true; /* Solo compara los dos últimos vértices, corregir */
 	else return false;
 }
 
@@ -263,8 +269,7 @@ void resultados(polygon &P) {
 	}
 	cout << "\n\n\tEs un polígono de " << P.getSides() <<" vértices.\n";
 	if(P.getName() == "") cout << "\tSe desconoce el nombre de la figura.\n";
-	else if(P.isRegular()) cout << "\tLa figura se trata de un " << P.getName() << " regular.\n";
-	else cout << "\tLa figura se trata de un " << P.getName() << " irregular.\n";
+	else cout << "\tLa figura se trata de un " << P.getName() << " " << P.getNameIsRegular() << ".\n";
 	cout << "\tÁrea: " << P.getArea() << " u²\n"
 	     << "\tPerímetro: " << P.getPerimeter() << " u\n\n\n"
 	     << "\t\tPresiona intro para continuar...";
@@ -341,10 +346,10 @@ void menuC() {
 	     << "\tx: ";
 	cin >> x;
 	cin.get();
-	P.setX(x, 0);
 	cout << "\ty: ";
 	cin >> y;
 	cin.get();
+	P.setX(x, 0);
 	P.setY(y, 0);
 	do {
 		header();
