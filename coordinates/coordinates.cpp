@@ -174,13 +174,14 @@ void polygon::newVertex() {
 }
 
 bool polygon::isClosed() {
-	if (getSides() >= 3 && getX(0) == getX(getSides()) && getY(0) == getY(getSides())) return true;
+	if(getSides() >= 3 && getX(0) == getX(getSides()) && getY(0) == getY(getSides())) return true;
 	else return false;
 }
 
 bool polygon::isRegular() {
-	if(getSides() >= 3 && getAngle(getSides()) == getAngle(getSides() - 1)) return true; /* Solo compara los dos últimos vértices, corregir */
-	else return false;
+	if(getSides() < 3) return false;
+	for(int i = 0; i < getSides(); i++) if(getAngle(i) != getAngle(i + 1)) return false;
+	return true;
 }
 
 void polygon::inputB(double x, double y, double side_length) {
