@@ -33,10 +33,8 @@ class polygon {
 
 		vector<vertex> vert;
 
-		int maxVertexID;
 		const long double PI = 3.141592653589793115997963468544185161590576171875;
 
-		void setMaxVertexID(int n);
 		int getVertexID(int v);
 	public:
 		polygon();		
@@ -45,7 +43,7 @@ class polygon {
 		double getX(int v);
 		double getY(int v);
 		double getAngle(int v);
-		void calcAngles(); /* No calcula bien los ángulos */
+		void calcAngles();
 		double getAristaPoste(int v); /* Buscar traducción al nombre */
 		void calcAristaPoste(int v);
 		double getArea();
@@ -59,13 +57,9 @@ class polygon {
 		void newVertex();
 		bool isRegular();
 
-		void inputB(double x, double y, double side_length, int sides); /* Necesita revisión */
-		bool inputC(double v_angle, double side_length, int v); /* Necesita revisión */
+		void inputB(double x, double y, double side_length, int sides); /* Saltan bugs si se recalculan los lados después */
+		bool inputC(double v_angle, double side_length, int v); /* No funciona */
 };
-
-void polygon::setMaxVertexID(int n) {
-	maxVertexID = n;
-}
 
 int polygon::getVertexID(int v) {
 	if(v < 0) {
@@ -79,12 +73,11 @@ int polygon::getVertexID(int v) {
 
 
 polygon::polygon() {
-	vert.emplace_back(vertex{});
-	maxVertexID = 0;
+	newVertex();
 }
 
 int polygon::getMaxVertexID() {
-	return maxVertexID;
+	return vert.size() - 1;
 }
 
 double polygon::getX(int v) {
@@ -172,7 +165,6 @@ void polygon::setAristaPoste(double value, int v) {
 
 void polygon::newVertex() {
 	vert.emplace_back(vertex{});
-	setMaxVertexID(getMaxVertexID() + 1);
 }
 
 bool polygon::isRegular() {
