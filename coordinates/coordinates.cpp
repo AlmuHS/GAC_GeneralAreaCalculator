@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <vector>
+#include <deque>
 #include <cmath>
 
 using namespace std;
@@ -31,7 +31,7 @@ class polygon {
 			double x, y, angle, arista_poste;
 		};
 
-		vector<vertex> vert;
+		deque<vertex> vertices;
 
 		const long double PI = 3.141592653589793115997963468544185161590576171875;
 
@@ -77,19 +77,19 @@ polygon::polygon() {
 }
 
 int polygon::getMaxVertexID() {
-	return vert.size() - 1;
+	return vertices.size() - 1;
 }
 
 double polygon::getX(int v) {
-	return vert[getVertexID(v)].x;
+	return vertices[getVertexID(v)].x;
 }
 
 double polygon::getY(int v) {
-	return vert[getVertexID(v)].y;
+	return vertices[getVertexID(v)].y;
 }
 
 double polygon::getAngle(int v) {
-	return vert[getVertexID(v)].angle;
+	return vertices[getVertexID(v)].angle;
 }
 
 void polygon::calcAngles() {
@@ -106,7 +106,7 @@ void polygon::calcAngles() {
 }
 
 double polygon::getAristaPoste(int v) {
-	return vert[getVertexID(v)].arista_poste;
+	return vertices[getVertexID(v)].arista_poste;
 }
 
 void polygon::calcAristaPoste(int v) {
@@ -148,23 +148,23 @@ string polygon::getNameIsRegular() {
 }
 
 void polygon::setX(double value, int v) {
-	vert[v].x = value;
+	vertices[v].x = value;
 }
 
 void polygon::setY(double value, int v) {
-	vert[v].y = value;
+	vertices[v].y = value;
 }
 
 void polygon::setAngle(double value, int v) {
-	vert[v].angle = value;
+	vertices[v].angle = value;
 }
 
 void polygon::setAristaPoste(double value, int v) {
-	vert[v].arista_poste = value;
+	vertices[v].arista_poste = value;
 }
 
 void polygon::newVertex() {
-	vert.emplace_back(vertex{});
+	vertices.emplace_back();
 }
 
 bool polygon::isRegular() {
