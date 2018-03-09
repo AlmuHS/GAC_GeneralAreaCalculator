@@ -28,110 +28,168 @@ using namespace std;
 class polygon {
 	private:
 		struct vertex {
-			double x, y, angle, arista_poste;
+			double x, y, angle, side_length;
+			vertex(double _x, double _y) : x(_x), y(_y) {}
+			vertex(double _x, double _y, double _angle, double _side_length) : x(_x), y(_y), angle(_angle), side_length(_side_length) {}
 		};
 
 		deque<vertex> vertices;
-
 		const long double PI = 3.141592653589793115997963468544185161590576171875;
+		bool regular;
 
-		int getVertexID(int v);
-	public:
-		polygon();		
-
-		int getMaxVertexID();
-		double getX(int v);
-		double getY(int v);
-		double getAngle(int v);
-		void calcAngles();
-		double getAristaPoste(int v); /* Buscar traducción al nombre */
-		void calcAristaPoste(int v);
-		double getArea();
-		double getPerimeter();
-		string getName();
-		string getNameIsRegular();
+		int validVertexID(int v);
 		void setX(double value, int v);
 		void setY(double value, int v);
+		void setAngle(int v);
 		void setAngle(double value, int v);
-		void setAristaPoste(double value, int v);
-		void newVertex();
-		bool isRegular();
+		void setSideLength(int v);
+		void setSideLength(double value, int v);
+		void setIsRegular(int v);
+		void newVertex(double x, double y, double angle, double side_length);
+	public:
+		polygon();
+		polygon(double x, double y);
+		polygon(double x, double y, double side_length, int sides);
 
-		void inputB(double x, double y, double side_length, int sides); /* Saltan bugs si se recalculan los lados después */
-		bool inputC(double v_angle, double side_length, int v); /* No funciona */
+		void newVertexByAxis(double x, double y); /* Calcular angle y side_length según se introduzcan datos */
+		void newVertexByAngleAndSide(double v_angle, double side_length); /* No funciona. Necesita que haya al menos un vértice con X e Y ya asignados */
+		void close();
+
+		int MaxVertexID();
+		double X(int v);
+		double Y(int v);
+		double Angle(int v);
+		double SideLength(int v);
+		double Area();
+		double Perimeter();
+		bool isClosed();
+		bool isRegular();
+		string Name();
+		string NameIsRegular();
 };
 
-int polygon::getVertexID(int v) {
+int polygon::validVertexID(int v) {
 	if(v < 0) {
 		int c;
-		c = abs(v / (getMaxVertexID() + 1));
-		v += (getMaxVertexID() + 1) * (c + 1);
+		c = abs(v / (MaxVertexID() + 1));
+		v += (MaxVertexID() + 1) * (c + 1);
 	}
-
-	return v % (getMaxVertexID() + 1);
+	return v % (MaxVertexID() + 1);
 }
 
+void polygon::setX(double value, int v) {vertices[validVertexID(v)].x = value;}
 
-polygon::polygon() {
-	newVertex();
-}
+void polygon::setY(double value, int v) {vertices[validVertexID(v)].y = value;}
 
-int polygon::getMaxVertexID() {
-	return vertices.size() - 1;
-}
-
-double polygon::getX(int v) {
-	return vertices[getVertexID(v)].x;
-}
-
-double polygon::getY(int v) {
-	return vertices[getVertexID(v)].y;
-}
-
-double polygon::getAngle(int v) {
-	return vertices[getVertexID(v)].angle;
-}
-
-void polygon::calcAngles() {
+void polygon::setAngle(int v) {
 	double ax, ay, bx, by, cx, cy;
-	for(int i = 0; i <= getMaxVertexID(); i++) {
-		ax = getX(i);
-		ay = getY(i);
-		bx = getX(i + 1);
-		by = getY(i + 1);
-		cx = getX(i - 1);
-		cy = getY(i - 1);
-		setAngle(acos((((bx - ax) * (cx - ax)) + ((by - ay) * (cy - ay))) / (sqrt(pow(bx - ax, 2) + pow(by - ay, 2)) * sqrt(pow(cx - ax, 2) + pow(cy - ay, 2)))) * 180 / PI, i);
+	ax = X(v);
+	ay = Y(v);
+	bx = X(v + 1);
+	by = Y(v + 1);
+	cx = X(v - 1);
+	cy = Y(v - 1);
+	setAngle(acos((((bx - ax) * (cx - ax)) + ((by - ay) * (cy - ay))) / (sqrt(pow(bx - ax, 2) + pow(by - ay, 2)) * sqrt(pow(cx - ax, 2) + pow(cy - ay, 2)))) * 180 / PI, v);
+}
+
+void polygon::setAngle(double value, int v) {vertices[validVertexID(v)].angle = value;}
+
+void polygon::setSideLength(int v) {setSideLength(sqrt(pow(X(v + 1) - X(v), 2) + pow(Y(v + 1) - Y(v), 2)), v);}
+
+void polygon::setSideLength(double value, int v) {vertices[validVertexID(v)].side_length = value;}
+
+void polygon::setIsRegular(int v) {
+	if(MaxVertexID() < 2 || regular == false) return;
+	if(Angle(v) == Angle(v - 1) && SideLength(v) == SideLength(v - 1)) regular = true;
+	else regular = false;
+}
+
+polygon::polygon() : regular(true) {}
+
+polygon::polygon(double x, double y) : regular(true) {newVertexByAxis(x, y);}
+
+polygon::polygon(double x, double y, double side_length, int sides) : regular(true) {
+	double angle = 180 - (360 / sides);
+	vertices.emplace_back(x, y, angle, side_length);
+	for(int i = 0; i + 1 < sides; i++) {
+		vertices.emplace_back(cos(i * PI * 2 / sides) * side_length + X(i),
+		                      sin(i * PI * 2 / sides) * side_length + Y(i),
+		                      angle,
+			              side_length);
 	}
 }
 
-double polygon::getAristaPoste(int v) {
-	return vertices[getVertexID(v)].arista_poste;
-}
-
-void polygon::calcAristaPoste(int v) {
-	setAristaPoste(sqrt(pow(getX(v + 1) - getX(v), 2) + pow(getY(v + 1) - getY(v), 2)), v);
-}
-
-double polygon::getArea() {
-	double x, y;
-	for(int i = 0; i <= getMaxVertexID(); i++) {
-		x += getX(i) * getY(i + 1);
-		y += getY(i) * getX(i + 1);
+void polygon::newVertexByAxis(double x, double y) {
+	if(MaxVertexID() >= 0 && x == X(0) && y == Y(0)) close();
+	else {
+		vertices.emplace_back(x, y);
+		if(MaxVertexID() > 0) setSideLength(MaxVertexID() - 1);
+		if(MaxVertexID() > 1) setAngle(MaxVertexID() - 1);
+		if(MaxVertexID() > 2) setIsRegular(MaxVertexID() - 1);
 	}
-	return abs(x - y) / 2;;
 }
 
-double polygon::getPerimeter() {
-	double perimeter;
-	for(int i = 0; i <= getMaxVertexID(); i++) {
-		perimeter += getAristaPoste(i);
+void polygon::newVertexByAngleAndSide(double angle, double side_length) {
+	setAngle(angle, MaxVertexID());
+	setSideLength(side_length, MaxVertexID());
+	double xy_common = cos(MaxVertexID() * PI * 2 / (360 / (180 - angle))) * side_length;
+	double x = xy_common + X(MaxVertexID());
+	double y = xy_common + Y(MaxVertexID());
+	if(x != X(0) || y != Y(0)) vertices.emplace_back(x, y);
+}
+
+void polygon::close() {
+	setSideLength(MaxVertexID());
+	setAngle(0);
+	setAngle(MaxVertexID());
+	setIsRegular(0);
+	setIsRegular(1);
+	setIsRegular(MaxVertexID());
+}
+
+int polygon::MaxVertexID() {return vertices.size() - 1;}
+
+double polygon::X(int v) {return vertices[validVertexID(v)].x;}
+
+double polygon::Y(int v) {return vertices[validVertexID(v)].y;}
+
+double polygon::Angle(int v) {return vertices[validVertexID(v)].angle;}
+
+double polygon::SideLength(int v) {return vertices[validVertexID(v)].side_length;}
+
+double polygon::Area() {
+	if(isClosed()) {
+		double x, y;
+		for(int i = 0; i <= MaxVertexID(); i++) {
+			x += X(i) * Y(i + 1);
+			y += Y(i) * X(i + 1);
+		}
+		return abs(x - y) / 2;
 	}
-	return perimeter;
 }
 
-string polygon::getName() {
-	int i = getMaxVertexID() + 1;
+double polygon::Perimeter() {
+	if(isClosed()) {
+		double perimeter;
+		for(int i = 0; i <= MaxVertexID(); i++) {
+			perimeter += SideLength(i);
+		}
+		return perimeter;
+	}
+}
+
+bool polygon::isClosed() {
+	if(Angle(MaxVertexID()) && SideLength(MaxVertexID())) return true;
+	else return false;
+}
+
+bool polygon::isRegular() {
+	if(!isClosed()) return false;
+	return regular;
+}
+
+string polygon::Name() {
+	int i = MaxVertexID() + 1;
 	if(i < 3) return "";  /* Gestionar casos en los que haya menos de 3 lados */
 	string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
@@ -142,68 +200,9 @@ string polygon::getName() {
 	else return pol_small[i];
 }
 
-string polygon::getNameIsRegular() {
+string polygon::NameIsRegular() {
 	if(isRegular()) return "regular";
 	else return "irregular";
-}
-
-void polygon::setX(double value, int v) {
-	vertices[v].x = value;
-}
-
-void polygon::setY(double value, int v) {
-	vertices[v].y = value;
-}
-
-void polygon::setAngle(double value, int v) {
-	vertices[v].angle = value;
-}
-
-void polygon::setAristaPoste(double value, int v) {
-	vertices[v].arista_poste = value;
-}
-
-void polygon::newVertex() {
-	vertices.emplace_back();
-}
-
-bool polygon::isRegular() {
-	if(getMaxVertexID() < 3) return false;
-	for(int i = 0; i < getMaxVertexID(); i++) if(getAngle(i) != getAngle(i + 1)) return false;
-	return true;
-}
-
-void polygon::inputB(double x, double y, double side_length, int sides) {
-	setX(x, 0);
-	setY(y, 0);
-	setAristaPoste(side_length, 0);
-	setAngle(180 - (360 / sides), 0);
-	for(int i = 0; i < sides - 1; i++) {
-		newVertex();
-		setX(cos(i * PI * 2 / getMaxVertexID()) * side_length + getX(i), i + 1);
-		setY(sin(i * PI * 2 / getMaxVertexID()) * side_length + getY(i), i + 1);
-		setAngle(getAngle(i), i + 1);
-		setAristaPoste(getAristaPoste(i), i + 1);
-	}
-}
-
-bool polygon::inputC(double v_angle, double side_length, int v) {
-	double x, y;
-	
-	setAngle(v_angle, v);
-	setAristaPoste(side_length, v);
-
-	x = cos(v * PI * 2 / (360 / (180 - getAngle(v)))) * getAristaPoste(v) + getX(v);
-	y = cos(v * PI * 2 / (360 / (180 - getAngle(v)))) * getAristaPoste(v) + getY(v);
-
-	if(x == getX(0) && y == getY(0)) {  // La detección de cerrado no funciona
-		return false;
-	} else {
-		newVertex();
-		setX(x, v + 1);
-		setY(y, v + 1);
-		return true;
-	}
 }
 
 void header();
@@ -252,9 +251,9 @@ void header() {
 }
 
 void coordinates_label(polygon &P) {
-	for(int i = 0; i < P.getMaxVertexID(); i++) {
+	for(int i = 0; i < P.MaxVertexID() + 1; i++) {
 		if(i % 4 == 0) cout << "\n";
-		cout << "\t(" << P.getX(i) << ", " << P.getY(i) << ") ";
+		cout << "\t(" << P.X(i) << ", " << P.Y(i) << ") ";
 	}
 }
 
@@ -262,16 +261,16 @@ void resultados(polygon &P) {
 	header();
 	cout << "\n\t\t\t\tResultados:\n\n"
 	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
-	for(int i = 0; i <= P.getMaxVertexID(); i++) {
-		cout << "\n" << i + 1 << "\t(" << P.getX(i) << ", " << P.getY(i) << ") <) " << P.getAngle(i) << "º"
-		     << " \t(" << P.getX(i + 1) << ", " << P.getY(i + 1) << ") <) " << P.getAngle(i + 1) << "º"
-		     << " \t|" << P.getAristaPoste(i) << "|";
+	for(int i = 0; i <= P.MaxVertexID(); i++) {
+		cout << "\n" << i + 1 << "\t(" << P.X(i) << ", " << P.Y(i) << ") <) " << P.Angle(i) << "º"
+		     << " \t(" << P.X(i + 1) << ", " << P.Y(i + 1) << ") <) " << P.Angle(i + 1) << "º"
+		     << " \t|" << P.SideLength(i) << "|";
 	}
-	cout << "\n\n\tEs un polígono de " << P.getMaxVertexID() + 1 <<" vértices.\n";
-	if(P.getName() == "") cout << "\tSe desconoce el nombre de la figura.\n";
-	else cout << "\tLa figura se trata de un " << P.getName() << " " << P.getNameIsRegular() << ".\n";
-	cout << "\tÁrea: " << P.getArea() << " u²\n"
-	     << "\tPerímetro: " << P.getPerimeter() << " u\n\n\n"
+	cout << "\n\n\tEs un polígono de " << P.MaxVertexID() + 1 <<" vértices.\n";
+	if(P.Name() == "") cout << "\tSe desconoce el nombre de la figura.\n";
+	else cout << "\tLa figura se trata de un " << P.Name() << " " << P.NameIsRegular() << ".\n";
+	cout << "\tÁrea: " << P.Area() << " u²\n"
+	     << "\tPerímetro: " << P.Perimeter() << " u\n\n\n"
 	     << "\t\tPresiona intro para continuar...";
 	cin.get();
 }
@@ -279,22 +278,21 @@ void resultados(polygon &P) {
 void menuA() {
 	polygon P;
 	double x, y;
-	char resp;
-	while(true) {
+	char resp = 'S';
+	do {
 		header();
 		cout << "\n\tPor favor, introduzca las coordenadas de los vértices del polí-\n"
 		     << "\tgono en sentido horario.\n";
 		coordinates_label(P);
-		cout << "\n\n\tVértice " << P.getMaxVertexID() + 1 << "\n"
+		cout << "\n\n\tVértice " << P.MaxVertexID() + 2 << "\n"
 		     << "\tx: ";
 		cin >> x;
 		cin.get();
 		cout << "\ty: ";
 		cin >> y;
 		cin.get();
-		P.setX(x, P.getMaxVertexID());
-		P.setY(y, P.getMaxVertexID());
-		if(P.getMaxVertexID() >= 2) {
+		P.newVertexByAxis(x, y);
+		if(P.MaxVertexID() > 1) {
 			do {
 				cout << "\n\t\t¿Desea introducir otro vértice? (S/N) ";
 				cin >> resp;
@@ -302,17 +300,13 @@ void menuA() {
 				resp = toupper(resp);
 			} while(resp != 'N' && resp != 'S');
 		}
-		if(resp == 'N') break;
-		P.newVertex();
-	}
-	for(int i = 0; i <= P.getMaxVertexID(); i++) P.calcAristaPoste(i); // No funciona con menú B
-	P.calcAngles(); // No funciona con menú B
+	} while(resp == 'S');
+	P.close();
 	resultados(P);
 }
 
 void menuB() {
-	polygon P;
-	double x, y, arista_poste;
+	double x, y, sides_length;
 	int sides;
 	do {
 		header();
@@ -324,9 +318,9 @@ void menuB() {
 	cout << "\n\tPor favor, introduzca la longitud de los lados del polígono.\n\n";
 	do {
 		cout << "\tLongitud: ";
-		cin >> arista_poste;
+		cin >> sides_length;
 		cin.get();
-	} while(arista_poste <= 0);
+	} while(sides_length <= 0);
 	cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del polígono.\n"
 	     << "\tx: ";
 	cin >> x;
@@ -334,13 +328,12 @@ void menuB() {
 	cout << "\ty: ";
 	cin >> y;
 	cin.get();
-	P.inputB(x, y, arista_poste, sides);
+	polygon P(x, y, sides_length, sides);
 	resultados(P);
 }
 
 void menuC() {
-	polygon P;
-	double x, y, angle, arista_poste;
+	double x, y, angle, side_length;
 	header();
 	cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del polígono.\n"
 	     << "\tx: ";
@@ -349,20 +342,20 @@ void menuC() {
 	cout << "\ty: ";
 	cin >> y;
 	cin.get();
-	P.setX(x, 0);
-	P.setY(y, 0);
+	polygon P(x, y);
 	do {
 		header();
 		cout << "\n";
 		coordinates_label(P);
-		cout << "\n\tPor favor, introduzca la amplitud del " << P.getMaxVertexID() + 1 << "º ángulo del polígono.\n\n"
+		cout << "\n\tPor favor, introduzca la amplitud del " << P.MaxVertexID() + 1 << "º ángulo del polígono.\n\n"
 		     << "\tAmplitud (en grados): ";
 		cin >> angle;
 		cin.get();
-		cout << "\n\tPor favor, introduzca la longitud del " << P.getMaxVertexID() + 1 << "º lado del polígono.\n\n"
+		cout << "\n\tPor favor, introduzca la longitud del " << P.MaxVertexID() + 1 << "º lado del polígono.\n\n"
 		     << "\tLongitud: ";
-		cin >> arista_poste;
+		cin >> side_length;
 		cin.get();
-	} while(P.inputC(angle, arista_poste, P.getMaxVertexID()));
+		P.newVertexByAngleAndSide(angle, side_length);
+	} while(!P.isClosed());
 	resultados(P);
 }
