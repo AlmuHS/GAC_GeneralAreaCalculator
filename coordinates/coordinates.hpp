@@ -20,8 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <deque>
 #include <cmath>
 
-using namespace std;
-
 class polygon {
 	private:
 		struct vertex {
@@ -30,7 +28,7 @@ class polygon {
 			vertex(double _x, double _y, double _angle, double _side_length) : x(_x), y(_y), angle(_angle), side_length(_side_length) {}
 		};
 
-		deque<vertex> vertices;
+		std::deque<vertex> vertices;
 		const long double PI = 3.141592653589793115997963468544185161590576171875;
 		bool regular;
 
@@ -62,8 +60,8 @@ class polygon {
 		double Perimeter();
 		bool isClosed();
 		bool isRegular();
-		string Name();
-		string NameIsRegular();
+		std::string Name();
+		std::string NameIsRegular();
 };
 
 int polygon::validVertexID(int v) {
@@ -77,9 +75,9 @@ int polygon::validVertexID(int v) {
 
 double polygon::round(double value, int dec) {return ceil((value * pow(10, dec) - 0.5) / pow(10, dec));}
 
-polygon::vertex polygon::nextXYByAngleAndSide(double angle, double side_length, int vertex) {
-	double xy_common = vertex * PI * 2 / (360 / (180 - angle));
-	polygon::vertex point = {cos(xy_common) * side_length + X(vertex), sin(xy_common) * side_length + Y(vertex)};
+polygon::vertex polygon::nextXYByAngleAndSide(double angle, double side_length, int v) {
+	double xy_common = v * PI * 2 / (360 / (180 - angle));
+	vertex point = {cos(xy_common) * side_length + X(v), sin(xy_common) * side_length + Y(v)};
 	return point;
 }
 	
@@ -118,7 +116,7 @@ polygon::polygon(double x, double y, double side_length, int sides) : polygon() 
 	double angle = 180 - (360 / sides);
 	vertices.emplace_back(x, y, angle, side_length);
 	for(int i = 0; i + 1 < sides; i++) {
-		polygon::vertex point = nextXYByAngleAndSide(angle, side_length, i);
+		vertex point = nextXYByAngleAndSide(angle, side_length, i);
 		vertices.emplace_back(point.x, point.y, angle, side_length);
 	}
 }
@@ -136,7 +134,7 @@ void polygon::newVertexByAxis(double x, double y) {
 void polygon::newVertexByAngleAndSide(double angle, double side_length) {
 	setAngle(angle, MaxVertexID());
 	setSideLength(side_length, MaxVertexID());
-	polygon::vertex point = nextXYByAngleAndSide(angle, side_length, MaxVertexID());
+	vertex point = nextXYByAngleAndSide(angle, side_length, MaxVertexID());
 	if(MaxVertexID() < 3 || round(point.x, 4) != X(0) || round(point.y, 4) != Y(0)) vertices.emplace_back(point.x, point.y);
 }
 
@@ -190,18 +188,18 @@ bool polygon::isRegular() {
 	return regular;
 }
 
-string polygon::Name() {
+std::string polygon::Name() {
 	int i = MaxVertexID() + 1;
 	if(i < 3 || i >= 100) return "";
-	string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
-	string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
-	string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+	std::string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+	std::string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
+	std::string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
 	
 	if(i >= 20) return pol_big[i / 10] + pol_small2[i % 10] + "gono";
 	else return pol_small[i];
 }
 
-string polygon::NameIsRegular() {
+std::string polygon::NameIsRegular() {
 	if(isRegular()) return "regular";
 	else return "irregular";
 }
