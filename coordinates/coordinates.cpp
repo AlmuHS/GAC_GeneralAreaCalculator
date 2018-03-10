@@ -38,6 +38,8 @@ class polygon {
 		bool regular;
 
 		int validVertexID(int v);
+		double round(double value, int dec);
+		vertex nextXYByAngleAndSide(double angle, double side_length, int vertex);
 		void setX(double value, int v);
 		void setY(double value, int v);
 		void setAngle(int v);
@@ -45,14 +47,13 @@ class polygon {
 		void setSideLength(int v);
 		void setSideLength(double value, int v);
 		void setIsRegular(int v);
-		void newVertex(double x, double y, double angle, double side_length);
 	public:
 		polygon();
 		polygon(double x, double y);
 		polygon(double x, double y, double side_length, int sides);
 
-		void newVertexByAxis(double x, double y); /* Calcular angle y side_length según se introduzcan datos */
-		void newVertexByAngleAndSide(double v_angle, double side_length); /* No funciona. Necesita que haya al menos un vértice con X e Y ya asignados */
+		void newVertexByAxis(double x, double y);
+		void newVertexByAngleAndSide(double v_angle, double side_length); /* Necesita al menos de un X e Y asignados */
 		void close();
 
 		int MaxVertexID();
@@ -77,6 +78,14 @@ int polygon::validVertexID(int v) {
 	return v % (MaxVertexID() + 1);
 }
 
+double polygon::round(double value, int dec) {return ceil((value * pow(10, dec) - 0.5) / pow(10, dec));}
+
+polygon::vertex polygon::nextXYByAngleAndSide(double angle, double side_length, int vertex) {
+	double xy_common = vertex * PI * 2 / (360 / (180 - angle));
+	polygon::vertex point = {cos(xy_common) * side_length + X(vertex), sin(xy_common) * side_length + Y(vertex)};
+	return point;
+}
+	
 void polygon::setX(double value, int v) {vertices[validVertexID(v)].x = value;}
 
 void polygon::setY(double value, int v) {vertices[validVertexID(v)].y = value;}
@@ -106,16 +115,14 @@ void polygon::setIsRegular(int v) {
 
 polygon::polygon() : regular(true) {}
 
-polygon::polygon(double x, double y) : regular(true) {newVertexByAxis(x, y);}
+polygon::polygon(double x, double y) : polygon() {newVertexByAxis(x, y);}
 
-polygon::polygon(double x, double y, double side_length, int sides) : regular(true) {
+polygon::polygon(double x, double y, double side_length, int sides) : polygon() {
 	double angle = 180 - (360 / sides);
 	vertices.emplace_back(x, y, angle, side_length);
 	for(int i = 0; i + 1 < sides; i++) {
-		vertices.emplace_back(cos(i * PI * 2 / sides) * side_length + X(i),
-		                      sin(i * PI * 2 / sides) * side_length + Y(i),
-		                      angle,
-			              side_length);
+		polygon::vertex point = nextXYByAngleAndSide(angle, side_length, i);
+		vertices.emplace_back(point.x, point.y, angle, side_length);
 	}
 }
 
@@ -132,10 +139,8 @@ void polygon::newVertexByAxis(double x, double y) {
 void polygon::newVertexByAngleAndSide(double angle, double side_length) {
 	setAngle(angle, MaxVertexID());
 	setSideLength(side_length, MaxVertexID());
-	double xy_common = cos(MaxVertexID() * PI * 2 / (360 / (180 - angle))) * side_length;
-	double x = xy_common + X(MaxVertexID());
-	double y = xy_common + Y(MaxVertexID());
-	if(x != X(0) || y != Y(0)) vertices.emplace_back(x, y);
+	polygon::vertex point = nextXYByAngleAndSide(angle, side_length, MaxVertexID());
+	if(MaxVertexID() < 3 || round(point.x, 4) != X(0) || round(point.y, 4) != Y(0)) vertices.emplace_back(point.x, point.y);
 }
 
 void polygon::close() {
@@ -190,13 +195,12 @@ bool polygon::isRegular() {
 
 string polygon::Name() {
 	int i = MaxVertexID() + 1;
-	if(i < 3) return "";  /* Gestionar casos en los que haya menos de 3 lados */
+	if(i < 3 || i >= 100) return "";
 	string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
 	string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
 	
-	if(i >= 100) return "";
-	else if(i >= 20) return pol_big[i / 10] + pol_small2[i % 10] + "gono";
+	if(i >= 20) return pol_big[i / 10] + pol_small2[i % 10] + "gono";
 	else return pol_small[i];
 }
 
