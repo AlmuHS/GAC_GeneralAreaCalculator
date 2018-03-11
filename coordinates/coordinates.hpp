@@ -67,7 +67,7 @@ class polygon {
 int polygon::validVertexID(int v) {
 	if(v < 0) {
 		int c;
-		c = abs(v / (MaxVertexID() + 1));
+		c  = abs(v / (MaxVertexID() + 1));
 		v += (MaxVertexID() + 1) * (c + 1);
 	}
 	return v % (MaxVertexID() + 1);
@@ -77,7 +77,7 @@ double polygon::round(double value, int dec) {return ceil((value * pow(10, dec) 
 
 polygon::vertex polygon::nextXYByAngleAndSide(double angle, double side_length, int v) {
 	double xy_common = v * PI * 2 / (360 / (180 - angle));
-	vertex point = {cos(xy_common) * side_length + X(v), sin(xy_common) * side_length + Y(v)};
+	vertex point     = {cos(xy_common) * side_length + X(v), sin(xy_common) * side_length + Y(v)};
 	return point;
 }
 
@@ -193,9 +193,9 @@ bool polygon::isRegular() {
 std::string polygon::Name() {
 	int i = MaxVertexID() + 1;
 	if(i < 3 || i > 99) return "";
-	std::string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+	std::string pol_small[]  = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	std::string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
-	std::string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+	std::string pol_big[]    = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
 
 	if(i >= 20) return pol_big[i / 10] + pol_small2[i % 10] + "gono";
 	else return pol_small[i];
