@@ -164,7 +164,7 @@ double polygon::Area() {
 			x += X(i) * Y(i + 1);
 			y += Y(i) * X(i + 1);
 		}
-		return abs(x - y) / 2;
+		return std::abs(x - y) / 2;
 	}
 	return 0;
 }
