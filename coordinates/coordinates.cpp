@@ -21,14 +21,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 #include "coordinates.hpp"
 
+int menuMain();
 void header();
 void coordinates_label(polygon &P);
-void resultados(polygon &P);
 void menuA();
 void menuB();
 void menuC();
+void resultados(polygon &P);
 
 int main() {
+	return menuMain();
+}
+
+int menuMain() {
 	std::cout << std::setprecision(2) << std::fixed;
 	while(true) {
 		char menu_resp;
@@ -70,24 +75,6 @@ void coordinates_label(polygon &P) {
 		if(i % 4 == 0) std::cout << "\n";
 		std::cout << "\t(" << P.X(i) << ", " << P.Y(i) << ") ";
 	}
-}
-
-void resultados(polygon &P) {
-	header();
-	std::cout << "\n\t\t\t\tResultados:\n\n"
-	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
-	for(int i = 0; i <= P.MaxVertexID(); i++) {
-		std::cout << "\n" << i + 1 << "\t(" << P.X(i) << ", " << P.Y(i) << ") <) " << P.Angle(i) << "º"
-		     << " \t(" << P.X(i + 1) << ", " << P.Y(i + 1) << ") <) " << P.Angle(i + 1) << "º"
-		     << " \t|" << P.SideLength(i) << "|";
-	}
-	std::cout << "\n\n\tEs un polígono de " << P.MaxVertexID() + 1 <<" vértices.\n";
-	if(P.Name() == "") std::cout << "\tSe desconoce el nombre de la figura.\n";
-	else std::cout << "\tLa figura se trata de un " << P.Name() << " " << P.NameIsRegular() << ".\n";
-	std::cout << "\tÁrea: " << P.Area() << " u²\n"
-	     << "\tPerímetro: " << P.Perimeter() << " u\n\n\n"
-	     << "\t\tPresiona intro para continuar...";
-	std::cin.get();
 }
 
 void menuA() {
@@ -174,3 +161,22 @@ void menuC() {
 	} while(!P.isClosed());
 	resultados(P);
 }
+
+void resultados(polygon &P) {
+	header();
+	std::cout << "\n\t\t\t\tResultados:\n\n"
+	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
+	for(int i = 0; i <= P.MaxVertexID(); i++) {
+		std::cout << "\n" << i + 1 << "\t(" << P.X(i) << ", " << P.Y(i) << ") <) " << P.Angle(i) << "º"
+		     << " \t(" << P.X(i + 1) << ", " << P.Y(i + 1) << ") <) " << P.Angle(i + 1) << "º"
+		     << " \t|" << P.SideLength(i) << "|";
+	}
+	std::cout << "\n\n\tEs un polígono de " << P.MaxVertexID() + 1 <<" vértices.\n";
+	if(P.Name() == "") std::cout << "\tSe desconoce el nombre de la figura.\n";
+	else std::cout << "\tLa figura se trata de un " << P.Name() << " " << P.NameIsRegular() << ".\n";
+	std::cout << "\tÁrea: " << P.Area() << " u²\n"
+	     << "\tPerímetro: " << P.Perimeter() << " u\n\n\n"
+	     << "\t\tPresiona intro para continuar...";
+	std::cin.get();
+}
+
