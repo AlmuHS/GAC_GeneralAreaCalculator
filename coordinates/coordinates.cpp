@@ -29,8 +29,7 @@ void menuB();
 void menuC();
 
 int main() {
-	std::cout.precision(2);
-	std::cout << std::fixed;
+	std::cout << std::setprecision(2) << std::fixed;
 	while(true) {
 		char menu_resp;
 		header();

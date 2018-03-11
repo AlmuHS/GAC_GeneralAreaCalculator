@@ -24,7 +24,7 @@ class polygon {
 	private:
 		struct vertex {
 			double x, y, angle, side_length;
-			vertex(double _x, double _y) : x(_x), y(_y) {}
+			vertex(double _x, double _y) : x(_x), y(_y), angle(0), side_length(0) {}
 			vertex(double _x, double _y, double _angle, double _side_length) : x(_x), y(_y), angle(_angle), side_length(_side_length) {}
 		};
 
@@ -80,7 +80,7 @@ polygon::vertex polygon::nextXYByAngleAndSide(double angle, double side_length, 
 	vertex point = {cos(xy_common) * side_length + X(v), sin(xy_common) * side_length + Y(v)};
 	return point;
 }
-	
+
 void polygon::setX(double value, int v) {vertices[validVertexID(v)].x = value;}
 
 void polygon::setY(double value, int v) {vertices[validVertexID(v)].y = value;}
@@ -166,6 +166,7 @@ double polygon::Area() {
 		}
 		return abs(x - y) / 2;
 	}
+	return 0;
 }
 
 double polygon::Perimeter() {
@@ -176,6 +177,7 @@ double polygon::Perimeter() {
 		}
 		return perimeter;
 	}
+	return 0;
 }
 
 bool polygon::isClosed() {
@@ -190,11 +192,11 @@ bool polygon::isRegular() {
 
 std::string polygon::Name() {
 	int i = MaxVertexID() + 1;
-	if(i < 3 || i >= 100) return "";
+	if(i < 3 || i > 99) return "";
 	std::string pol_small[] = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
 	std::string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
 	std::string pol_big[] = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
-	
+
 	if(i >= 20) return pol_big[i / 10] + pol_small2[i % 10] + "gono";
 	else return pol_small[i];
 }
