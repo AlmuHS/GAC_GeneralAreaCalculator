@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
 #include <iomanip>
+#include <memory>
 #include "coordinates.hpp"
 
 int menuMain();
@@ -39,13 +40,13 @@ int menuMain() {
 		char menu_resp;
 		header();
 		std::cout << "\n\tSeleccione una opción del menú.\n\n"
-		     << "\t\ta) Calcular el área de cualquier polígono a\n"
-		     << "\t\t partir de las coordenadas de los vértices.\n"
-		     << "\t\tb) Calcular área de un polígono regular.\n"
-		     << "\t\tc) Calcular área de un polígono cualquiera,\n"
-		     << "\t\t introduciendo lados y ángulos.\n"
-		     << "\n\t\ts) Salir\n"
-		     << "\n\n\t\t\tRespuesta: ";
+		          << "\t\ta) Calcular el área de cualquier polígono a\n"
+		          << "\t\t partir de las coordenadas de los vértices.\n"
+		          << "\t\tb) Calcular área de un polígono regular.\n"
+		          << "\t\tc) Calcular área de un polígono cualquiera,\n"
+		          << "\t\t introduciendo lados y ángulos.\n"
+		          << "\n\t\ts) Salir\n"
+		          << "\n\n\t\t\tRespuesta: ";
 		std::cin >> menu_resp;
 		std::cin.get();
 		menu_resp = toupper(menu_resp);
@@ -56,7 +57,7 @@ int menuMain() {
 			case 'S': return EXIT_SUCCESS;
 			default:
 				std::cout << "\n\n\t\tOpción seleccionada incorrecta.\n"
-				     << "Presiona intro para continuar...";
+				          << "Presiona intro para continuar...";
 				std::cin.get();
 		}
 	}
@@ -66,8 +67,8 @@ int menuMain() {
 void header() {
 	system("clear");
 	std::cout << std::setw(80) << std::setfill('=') << "\n"
-	     << "\t\t\tCALCULADORA DE ÁREAS\n"
-	     << std::setw(80) << std::setfill('=') << "\n";
+	          << "\t\t\tCALCULADORA DE ÁREAS\n"
+	          << std::setw(80) << std::setfill('=') << "\n";
 }
 
 void coordinates_label(polygon &P) {
@@ -78,23 +79,26 @@ void coordinates_label(polygon &P) {
 }
 
 void menuA() {
-	polygon P;
+	std::shared_ptr<polygon> P(nullptr);
 	double x, y;
 	char resp = 'S';
 	do {
 		header();
 		std::cout << "\n\tPor favor, introduzca las coordenadas de los vértices del polí-\n"
-		     << "\tgono en sentido horario.\n";
-		coordinates_label(P);
-		std::cout << "\n\n\tVértice " << P.MaxVertexID() + 2 << "\n"
-		     << "\tx: ";
+		          << "\tgono en sentido horario.\n";
+		if(P != nullptr) coordinates_label(*P);
+		std::cout << "\n\n\tVértice ";
+		if(P != nullptr) std::cout << P->MaxVertexID() + 2;
+		std::cout << "\n"
+		          << "\tx: ";
 		std::cin >> x;
 		std::cin.get();
 		std::cout << "\ty: ";
 		std::cin >> y;
 		std::cin.get();
-		P.newVertexByAxis(x, y);
-		if(P.MaxVertexID() > 1) {
+		if(P != nullptr) P->newVertexByAxis(x, y);
+		else P = std::make_shared<polygon> (x, y);
+		if(P->MaxVertexID() > 1) {
 			do {
 				std::cout << "\n\t\t¿Desea introducir otro vértice? (S/N) ";
 				std::cin >> resp;
@@ -103,8 +107,8 @@ void menuA() {
 			} while(resp != 'N' && resp != 'S');
 		}
 	} while(resp == 'S');
-	P.close();
-	resultados(P);
+	P->close();
+	resultados(*P);
 }
 
 void menuB() {
@@ -113,7 +117,7 @@ void menuB() {
 	do {
 		header();
 		std::cout << "\n\tPor favor, introduzca el número de vértices del polígono (no puede ser menor de 3).\n\n"
-		     << "\tNúmero: ";
+		          << "\tNúmero: ";
 		std::cin >> sides;
 		std::cin.get();
 	} while(sides < 3);
@@ -124,7 +128,7 @@ void menuB() {
 		std::cin.get();
 	} while(sides_length <= 0);
 	std::cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del polígono.\n"
-	     << "\tx: ";
+	          << "\tx: ";
 	std::cin >> x;
 	std::cin.get();
 	std::cout << "\ty: ";
@@ -150,11 +154,11 @@ void menuC() {
 		std::cout << "\n";
 		coordinates_label(P);
 		std::cout << "\n\tPor favor, introduzca la amplitud del " << P.MaxVertexID() + 1 << "º ángulo del polígono.\n\n"
-		     << "\tAmplitud (en grados): ";
+		          << "\tAmplitud (en grados): ";
 		std::cin >> angle;
 		std::cin.get();
 		std::cout << "\n\tPor favor, introduzca la longitud del " << P.MaxVertexID() + 1 << "º lado del polígono.\n\n"
-		     << "\tLongitud: ";
+		          << "\tLongitud: ";
 		std::cin >> side_length;
 		std::cin.get();
 		P.newVertexByAngleAndSide(angle, side_length);
@@ -165,18 +169,18 @@ void menuC() {
 void resultados(polygon &P) {
 	header();
 	std::cout << "\n\t\t\t\tResultados:\n\n"
-	     << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
+	          << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
 	for(int i = 0; i <= P.MaxVertexID(); i++) {
 		std::cout << "\n" << i + 1 << "\t(" << P.X(i) << ", " << P.Y(i) << ") <) " << P.Angle(i) << "º"
-		     << " \t(" << P.X(i + 1) << ", " << P.Y(i + 1) << ") <) " << P.Angle(i + 1) << "º"
-		     << " \t|" << P.SideLength(i) << "|";
+		          << " \t(" << P.X(i + 1) << ", " << P.Y(i + 1) << ") <) " << P.Angle(i + 1) << "º"
+		          << " \t|" << P.SideLength(i) << "|";
 	}
 	std::cout << "\n\n\tEs un polígono de " << P.MaxVertexID() + 1 <<" vértices.\n";
 	if(P.Name() == "") std::cout << "\tSe desconoce el nombre de la figura.\n";
 	else std::cout << "\tLa figura se trata de un " << P.Name() << " " << P.NameIsRegular() << ".\n";
 	std::cout << "\tÁrea: " << P.Area() << " u²\n"
-	     << "\tPerímetro: " << P.Perimeter() << " u\n\n\n"
-	     << "\t\tPresiona intro para continuar...";
+	          << "\tPerímetro: " << P.Perimeter() << " u\n\n\n"
+	          << "\t\tPresiona intro para continuar...";
 	std::cin.get();
 }
 

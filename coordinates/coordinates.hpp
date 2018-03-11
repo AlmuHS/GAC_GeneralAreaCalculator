@@ -42,13 +42,13 @@ class polygon {
 		void setSideLength(int v);
 		void setSideLength(double value, int v);
 		void setIsRegular(int v);
+		polygon();
 	public:
-		polygon(); /* Hay que ponerlo privado, si no hay que tener cuidado con no llamar al método newVertexByAndSide() sin haber creado un elemento previamente */
 		polygon(double x, double y);
 		polygon(double x, double y, double side_length, int sides);
 
 		void newVertexByAxis(double x, double y);
-		void newVertexByAngleAndSide(double v_angle, double side_length); /* Necesita al menos de un X e Y asignados */
+		void newVertexByAngleAndSide(double v_angle, double side_length);
 		void close();
 
 		int MaxVertexID();
