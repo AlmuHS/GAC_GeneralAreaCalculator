@@ -17,170 +17,146 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <iostream>
-#include <iomanip>
-#include <memory>
 #include "coordinates.hpp"
 
-int menuMain();
-void header();
-void coordinates_label(polygon &P);
-void menuA();
-void menuB();
-void menuC();
-void resultados(polygon &P);
-
-int main() {
-	return menuMain();
+int polygon::validVertexID(int v) {
+	if(v < 0) {
+		int c;
+		c  = abs(v / (MaxVertexID() + 1));
+		v += (MaxVertexID() + 1) * (c + 1);
+	}
+	return v % (MaxVertexID() + 1);
 }
 
-int menuMain() {
-	std::cout << std::setprecision(2) << std::fixed;
-	while(true) {
-		char menu_resp;
-		header();
-		std::cout << "\n\tSeleccione una opción del menú.\n\n"
-		          << "\t\ta) Calcular el área de cualquier polígono a\n"
-		          << "\t\t partir de las coordenadas de los vértices.\n"
-		          << "\t\tb) Calcular área de un polígono regular.\n"
-		          << "\t\tc) Calcular área de un polígono cualquiera,\n"
-		          << "\t\t introduciendo lados y ángulos.\n"
-		          << "\n\t\ts) Salir\n"
-		          << "\n\n\t\t\tRespuesta: ";
-		std::cin >> menu_resp;
-		std::cin.get();
-		menu_resp = toupper(menu_resp);
-		switch(menu_resp) {
-			case 'A': menuA(); break;
-			case 'B': menuB(); break;
-			case 'C': menuC(); break;
-			case 'S': return EXIT_SUCCESS;
-			default:
-				std::cout << "\n\n\t\tOpción seleccionada incorrecta.\n"
-				          << "Presiona intro para continuar...";
-				std::cin.get();
+double polygon::round(double value, int dec) {return ceil((value * pow(10, dec) - 0.5) / pow(10, dec));}
+
+polygon::vertex polygon::nextXYByAngleAndSide(double angle, double side_length, int v) {
+	double xy_common = v * PI * 2 / (360 / (180 - angle));
+	vertex point     = {cos(xy_common) * side_length + X(v), sin(xy_common) * side_length + Y(v)};
+	return point;
+}
+
+void polygon::setX(double value, int v) {vertices[validVertexID(v)].x = value;}
+
+void polygon::setY(double value, int v) {vertices[validVertexID(v)].y = value;}
+
+void polygon::setAngle(int v) {
+	double ax, ay, bx, by, cx, cy;
+	ax = X(v);
+	ay = Y(v);
+	bx = X(v + 1);
+	by = Y(v + 1);
+	cx = X(v - 1);
+	cy = Y(v - 1);
+	setAngle(acos((((bx - ax) * (cx - ax)) + ((by - ay) * (cy - ay))) / (sqrt(pow(bx - ax, 2) + pow(by - ay, 2)) * sqrt(pow(cx - ax, 2) + pow(cy - ay, 2)))) * 180 / PI, v);
+}
+
+void polygon::setAngle(double value, int v) {vertices[validVertexID(v)].angle = value;}
+
+void polygon::setSideLength(int v) {setSideLength(sqrt(pow(X(v + 1) - X(v), 2) + pow(Y(v + 1) - Y(v), 2)), v);}
+
+void polygon::setSideLength(double value, int v) {vertices[validVertexID(v)].side_length = value;}
+
+void polygon::setIsRegular(int v) {
+	if(MaxVertexID() < 2 || regular == false) return;
+	if(Angle(v) == Angle(v - 1) && SideLength(v) == SideLength(v - 1)) regular = true;
+	else regular = false;
+}
+
+polygon::polygon() : regular(true) {}
+
+polygon::polygon(double x, double y) : polygon() {newVertexByAxis(x, y);}
+
+polygon::polygon(double x, double y, double side_length, int sides) : polygon() {
+	double angle = 180 - (360 / sides);
+	vertices.emplace_back(x, y, angle, side_length);
+	for(int i = 0; i + 1 < sides; i++) {
+		vertex point = nextXYByAngleAndSide(angle, side_length, i);
+		vertices.emplace_back(point.x, point.y, angle, side_length);
+	}
+}
+
+void polygon::newVertexByAxis(double x, double y) {
+	if(MaxVertexID() >= 0 && x == X(0) && y == Y(0)) close();
+	else {
+		vertices.emplace_back(x, y);
+		if(MaxVertexID() > 0) setSideLength(MaxVertexID() - 1);
+		if(MaxVertexID() > 1) setAngle(MaxVertexID() - 1);
+		if(MaxVertexID() > 2) setIsRegular(MaxVertexID() - 1);
+	}
+}
+
+void polygon::newVertexByAngleAndSide(double angle, double side_length) {
+	setAngle(angle, MaxVertexID());
+	setSideLength(side_length, MaxVertexID());
+	vertex point = nextXYByAngleAndSide(angle, side_length, MaxVertexID());
+	if(MaxVertexID() < 3 || round(point.x, 4) != X(0) || round(point.y, 4) != Y(0)) vertices.emplace_back(point.x, point.y);
+}
+
+void polygon::close() {
+	setSideLength(MaxVertexID());
+	setAngle(0);
+	setAngle(MaxVertexID());
+	setIsRegular(0);
+	setIsRegular(1);
+	setIsRegular(MaxVertexID());
+}
+
+int polygon::MaxVertexID() {return vertices.size() - 1;}
+
+double polygon::X(int v) {return vertices[validVertexID(v)].x;}
+
+double polygon::Y(int v) {return vertices[validVertexID(v)].y;}
+
+double polygon::Angle(int v) {return vertices[validVertexID(v)].angle;}
+
+double polygon::SideLength(int v) {return vertices[validVertexID(v)].side_length;}
+
+double polygon::Area() {
+	if(isClosed()) {
+		double x, y;
+		for(int i = 0; i <= MaxVertexID(); i++) {
+			x += X(i) * Y(i + 1);
+			y += Y(i) * X(i + 1);
 		}
+		return std::abs(x - y) / 2;
 	}
-	return EXIT_FAILURE;
+	return 0;
 }
 
-void header() {
-	system("clear");
-	std::cout << std::setw(80) << std::setfill('=') << "\n"
-	          << "\t\t\tCALCULADORA DE ÁREAS\n"
-	          << std::setw(80) << std::setfill('=') << "\n";
-}
-
-void coordinates_label(polygon &P) {
-	for(int i = 0; i < P.MaxVertexID() + 1; i++) {
-		if(i % 4 == 0) std::cout << "\n";
-		std::cout << "\t(" << P.X(i) << ", " << P.Y(i) << ") ";
-	}
-}
-
-void menuA() {
-	std::shared_ptr<polygon> P(nullptr);
-	double x, y;
-	char resp = 'S';
-	do {
-		header();
-		std::cout << "\n\tPor favor, introduzca las coordenadas de los vértices del polí-\n"
-		          << "\tgono en sentido horario.\n";
-		if(P != nullptr) coordinates_label(*P);
-		std::cout << "\n\n\tVértice ";
-		if(P != nullptr) std::cout << P->MaxVertexID() + 2;
-		std::cout << "\n"
-		          << "\tx: ";
-		std::cin >> x;
-		std::cin.get();
-		std::cout << "\ty: ";
-		std::cin >> y;
-		std::cin.get();
-		if(P != nullptr) P->newVertexByAxis(x, y);
-		else P = std::make_shared<polygon> (x, y);
-		if(P->MaxVertexID() > 1) {
-			do {
-				std::cout << "\n\t\t¿Desea introducir otro vértice? (S/N) ";
-				std::cin >> resp;
-				std::cin.get();
-				resp = toupper(resp);
-			} while(resp != 'N' && resp != 'S');
+double polygon::Perimeter() {
+	if(isClosed()) {
+		double perimeter;
+		for(int i = 0; i <= MaxVertexID(); i++) {
+			perimeter += SideLength(i);
 		}
-	} while(resp == 'S');
-	P->close();
-	resultados(*P);
-}
-
-void menuB() {
-	double x, y, sides_length;
-	int sides;
-	do {
-		header();
-		std::cout << "\n\tPor favor, introduzca el número de vértices del polígono (no puede ser menor de 3).\n\n"
-		          << "\tNúmero: ";
-		std::cin >> sides;
-		std::cin.get();
-	} while(sides < 3);
-	std::cout << "\n\tPor favor, introduzca la longitud de los lados del polígono.\n\n";
-	do {
-		std::cout << "\tLongitud: ";
-		std::cin >> sides_length;
-		std::cin.get();
-	} while(sides_length <= 0);
-	std::cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del polígono.\n"
-	          << "\tx: ";
-	std::cin >> x;
-	std::cin.get();
-	std::cout << "\ty: ";
-	std::cin >> y;
-	std::cin.get();
-	polygon P(x, y, sides_length, sides);
-	resultados(P);
-}
-
-void menuC() {
-	double x, y, angle, side_length;
-	header();
-	std::cout << "\n\tPor favor, introduzca las coordenadas del primer vértice del polígono.\n"
-	     << "\tx: ";
-	std::cin >> x;
-	std::cin.get();
-	std::cout << "\ty: ";
-	std::cin >> y;
-	std::cin.get();
-	polygon P(x, y);
-	do {
-		header();
-		std::cout << "\n";
-		coordinates_label(P);
-		std::cout << "\n\tPor favor, introduzca la amplitud del " << P.MaxVertexID() + 1 << "º ángulo del polígono.\n\n"
-		          << "\tAmplitud (en grados): ";
-		std::cin >> angle;
-		std::cin.get();
-		std::cout << "\n\tPor favor, introduzca la longitud del " << P.MaxVertexID() + 1 << "º lado del polígono.\n\n"
-		          << "\tLongitud: ";
-		std::cin >> side_length;
-		std::cin.get();
-		P.newVertexByAngleAndSide(angle, side_length);
-	} while(!P.isClosed());
-	resultados(P);
-}
-
-void resultados(polygon &P) {
-	header();
-	std::cout << "\n\t\t\t\tResultados:\n\n"
-	          << "\tVértice A \tÁngulo\t\tVértice B\tÁngulo\t\tDist";
-	for(int i = 0; i <= P.MaxVertexID(); i++) {
-		std::cout << "\n" << i + 1 << "\t(" << P.X(i) << ", " << P.Y(i) << ") <) " << P.Angle(i) << "º"
-		          << " \t(" << P.X(i + 1) << ", " << P.Y(i + 1) << ") <) " << P.Angle(i + 1) << "º"
-		          << " \t|" << P.SideLength(i) << "|";
+		return perimeter;
 	}
-	std::cout << "\n\n\tEs un polígono de " << P.MaxVertexID() + 1 <<" vértices.\n";
-	if(P.Name() == "") std::cout << "\tSe desconoce el nombre de la figura.\n";
-	else std::cout << "\tLa figura se trata de un " << P.Name() << " " << P.NameIsRegular() << ".\n";
-	std::cout << "\tÁrea: " << P.Area() << " u²\n"
-	          << "\tPerímetro: " << P.Perimeter() << " u\n\n\n"
-	          << "\t\tPresiona intro para continuar...";
-	std::cin.get();
+	return 0;
 }
 
+bool polygon::isClosed() {
+	if(Angle(MaxVertexID()) && SideLength(MaxVertexID())) return true;
+	else return false;
+}
+
+bool polygon::isRegular() {
+	if(!isClosed()) return false;
+	return regular;
+}
+
+std::string polygon::Name() {
+	int i = MaxVertexID() + 1;
+	if(i < 3 || i > 99) return "";
+	std::string pol_small[]  = {"","", "", "triángulo", "cuadrado", "pentágono", "hexágono","heptágono", "octágono", "eneágono", "decágono", "endecágono", "dodecágono", "tridecágono", "tetradecágono", "pentadecágono", "hexadecágono", "heptadecágono", "octodecágono", "eneadecágono"};
+	std::string pol_small2[] = {"á", "akaihená","akaidí", "akaitrí", "akaitetrá", "akaipentá", "akaihexá","akaiheptá", "akaioctá", "akaieneá"};
+	std::string pol_big[]    = {"", "","icos", "triacont", "tetracont", "pentacont", "hexacont","heptacont", "octacont", "eneacont"};
+
+	if(i >= 20) return pol_big[i / 10] + pol_small2[i % 10] + "gono";
+	else return pol_small[i];
+}
+
+std::string polygon::NameIsRegular() {
+	if(isRegular()) return "regular";
+	else return "irregular";
+}
