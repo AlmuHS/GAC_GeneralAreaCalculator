@@ -43,7 +43,7 @@ class polygon {
 		void setSideLength(double value, int v);
 		void setIsRegular(int v);
 	public:
-		polygon();
+		polygon(); /* Hay que ponerlo privado, si no hay que tener cuidado con no llamar al método newVertexByAndSide() sin haber creado un elemento previamente */
 		polygon(double x, double y);
 		polygon(double x, double y, double side_length, int sides);
 
